@@ -1,3 +1,4 @@
+from .amd import *
 from .best_buy import *
 from .canada_computers import *
 from .newegg import *

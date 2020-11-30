@@ -79,6 +79,58 @@
     {
       "name": "Nvidia RTX 3080 - PNY XLR8 Gaming Revel",
       "url": "https://www.newegg.ca/p/N82E16814133809"
+    },
+    {
+      "name": "AMD RX 6800XT - ASRock Reference",
+      "url": "https://www.newegg.ca/p/N82E16814930045"
+    },
+    {
+      "name": "AMD RX 6800XT - Asus Reference",
+      "url": "https://www.newegg.ca/p/N82E16814126472"
+    },
+    {
+      "name": "AMD RX 6800XT - Gigabyte Reference",
+      "url": "https://www.newegg.ca/p/N82E16814932373"
+    },
+    {
+      "name": "AMD RX 6800XT - MSI Reference",
+      "url": "https://www.newegg.ca/p/N82E16814137607"
+    },
+    {
+      "name": "AMD RX 6800XT - Sapphire Reference",
+      "url": "https://www.newegg.ca/p/N82E16814202388"
+    },
+    {
+      "name": "AMD RX 6800XT - ASRock Phantom",
+      "url": "https://www.newegg.ca/p/N82E16814930049"
+    },
+    {
+      "name": "AMD RX 6800XT - Asus TUF",
+      "url": "https://www.newegg.ca/p/N82E16814126476"
+    },
+    {
+      "name": "AMD RX 6800XT - XFX Speedster MERC319",
+      "url": "https://www.newegg.ca/p/N82E16814150844"
+    },
+    {
+      "name": "AMD RX 6800XT - PowerColor Red Devil LE",
+      "url": "https://www.newegg.ca/p/N82E16814131767"
+    },
+    {
+      "name": "AMD RX 6800XT - Asus ROG Strix LC",
+      "url": "https://www.newegg.ca/p/N82E16814126475"
+    },
+    {
+      "name": "AMD RX 6800XT - Sapphire Nitro+ SE",
+      "url": "https://www.newegg.ca/p/N82E16814202390"
+    },
+    {
+      "name": "AMD RX 6800XT - ASRock Taichi",
+      "url": "https://www.newegg.ca/p/N82E16814930050"
+    },
+    {
+      "name": "AMD RX 6800XT - Sapphire Nitro+",
+      "url": "https://www.newegg.ca/p/N82E16814202391"
     }
   ],
   "stores": [

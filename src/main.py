@@ -2,16 +2,21 @@
 
 from datetime import datetime
 import logging
+from vendors.amd import AMD
 from vendors.best_buy import BestBuy
 from vendors.canada_computers import CanadaComputers
 from vendors.newegg import Newegg
 from vendors.memory_express import MemoryExpress
 from vendor_thread.vendor_thread import VendorThread
 
+'''
+TODO: Add header
+'''
 def configure_logger(log_to_file, log_to_stdout):
 
-    logger_name= "stockmonitor"
-    logger=logging.getLogger(logger_name)
+    logger_name = "stockmonitor"
+    logger = logging.getLogger(logger_name)
+    # The global log level must be set lower then the level of the messages going to /any/ output, hence DEBUG
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('[[ %(asctime)s ]] :: [[ %(levelname)s ]] :: %(message)s')
     log_file_name = datetime.now().strftime('/tmp/stockmonitor_%H_%M_%d_%m_%Y.log')
@@ -43,6 +48,7 @@ def main():
     try:
         # Start a thread for each vendor
         logger.info('Starting threads for vendors...')
+        VendorThread(AMD(logger), logger).start()
         VendorThread(BestBuy(logger), logger).start(),
         VendorThread(CanadaComputers(logger), logger).start(),
         VendorThread(Newegg(logger), logger).start(),
@@ -56,10 +62,6 @@ def main():
     except KeyboardInterrupt:
         logger.info('Exiting on keyboard interrupt')
         exit(0)
-    # except Exception as e:
-    #     logger.error('An unknown exception occured: \'{}\''.format(str(e)))
-    #     logger.error(str(e.__cause__))
-    #     exit(1)
 
 if __name__ == '__main__':
     main()
