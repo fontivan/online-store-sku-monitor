@@ -1,9 +1,11 @@
 from alert import Alert
+from concurrent.futures import as_completed
 import logging
 import json
 import os
 import random
 import requests
+from requests_futures.sessions import FuturesSession
 import time
 
 '''
@@ -15,8 +17,11 @@ class Vendor:
     logger = None
     in_stock_result = "IN_STOCK"
     items_json_path = None
+    items_to_check = []
     requests_timeout = 10 # seconds
     out_of_stock_result = "OUT_OF_STOCK"
+    session = None
+    stores_to_check = []
     thread_delay = 2 # seconds
     user_agent_headers = [
         # Android agents
@@ -52,6 +57,15 @@ class Vendor:
         self.vendor_dir = vendor_dir
         self.items_json_path = self.vendor_dir + "/items.json"
         self.alert = Alert(logger)
+        self.session = FuturesSession()
+
+        if os.path.isfile(self.items_json_path):
+            with open(self.items_json_path, 'r') as file:
+                json_data = json.load(file)
+                self.items_to_check = json_data['items']
+                self.stores_to_check = json_data['stores']
+        else:
+            raise IOError('File not found \'{}\''.format(self.items_json_path))
 
     '''
     TODO: Add header
@@ -74,49 +88,32 @@ class Vendor:
     TODO: Add header
     '''
     def check_stock_for_items(self):
-        if os.path.isfile(self.items_json_path):
-            with open(self.items_json_path, 'r') as file:
-                json_data = json.load(file)
-                items_to_check = json_data['items']
-                stores_to_check = json_data['stores']
-                for item in items_to_check:
-                    result = self.check_for_item(item, stores_to_check)
-                    if result == self.in_stock_result:
-                        self.alert.send_alert(item)
-                    elif result == self.out_of_stock_result:
-                        self.log_msg('\'{}\' not in stock.'.format(item['name']), logging.INFO)
-                    else:
-                        self.log_msg('An error occurred attempting to check stock for \'{}\'.'.format(item['name']), logging.WARNING)
-                        time.sleep(self.thread_delay * 4)
-                    time.sleep(self.thread_delay)
-        else:
-            self.log_msg('File not found at path \'{}\'.'.format(self.items_json_path), logging.ERROR)
 
-    '''
-    TODO: Add header
-    '''
-    def check_for_item(self, item, stores_to_check):
-        html = self.make_url_request(item)
-        if html:
-            return self.parse_item_page(html, stores_to_check)
-        return None
-
-    '''
-    TODO: Add header
-    '''
-    def make_url_request(self, item):
         request_headers = {
             'User-Agent': '{}'.format(random.choice(self.user_agent_headers))
         }
-        try:
-            request = requests.get(item['url'], headers = request_headers, timeout = self.requests_timeout)
-            if request.status_code == 200:
-                return request.text
-            else:
-                self.log_msg('Unable to get product page \'{}\''.format(item['url']), logging.ERROR)
-        except Exception as e:
-            self.log_msg('Caught requests exception \'{}\''.format(str(e)), logging.ERROR)
+        futures = []
 
+        for item in self.items_to_check:
+            try:
+                future = self.session.get(item['url'], headers = request_headers)
+                future.item = item
+                futures.append(future)
+
+                for future in as_completed(futures):
+                    response = future.result()
+                    if response.status_code == 200:
+                        stock_result = self.parse_item_page(response.text, self.stores_to_check)
+                        if stock_result == self.in_stock_result:
+                            self.alert.send_alert(future.item)
+                        elif stock_result == self.out_of_stock_result:
+                            self.log_msg('\'{}\' not in stock.'.format(future.item['name']), logging.INFO)
+                        else:
+                            self.report_error_and_sleep(future.item, None)
+                    else:
+                        self.report_error_and_sleep(future.item, None)
+            except Exception as e:
+                self.report_error_and_sleep(item, e)
         return None
 
     '''
@@ -124,3 +121,10 @@ class Vendor:
     '''
     def parse_item_page(self, item_page_html, stores_to_check):
         return self.out_of_stock_result
+
+    def report_error_and_sleep(self, item, e):
+        text = 'An error occurred attempting to check stock for \'{}\'.'.format(item['name'])
+        if e:
+            text = '{} Caused by exception: \'{}\''.format(text, str(e))
+        self.log_msg(text, logging.ERROR)
+        time.sleep(self.thread_delay * 4)
