@@ -82,7 +82,7 @@ class Vendor:
         if request.status_code == 200:
             return request.text
         else:
-            raise Exception("Unable to get product page: '" + item['url'] + '.')
+            print('Unable to get product page \'{}\''.format(item['url']))
 
     '''
     TODO: Add header
