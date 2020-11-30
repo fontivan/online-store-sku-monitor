@@ -2,28 +2,25 @@
 
 from vendors.canada_computers import CanadaComputers
 from vendors.memory_express import MemoryExpress
-import threading
-
-def thread_cc():
-    canada_computers = CanadaComputers()
-    canada_computers.check_stock_for_items()
-
-def thread_me():
-    memory_express = MemoryExpress()
-    memory_express.check_stock_for_items()
+from vendors.best_buy import BestBuy
+from vendor_thread.vendor_thread import VendorThread
 
 '''
 TODO: Add header
 '''
 def main():
 
-    thread_pool = list()
+    # Start a thread for each vendor
+    VendorThread(CanadaComputers()).start()
+    VendorThread(MemoryExpress()).start()
+    VendorThread(BestBuy()).start()
 
-    thread_pool.append(threading.Thread(target=thread_cc))
-    thread_pool.append(threading.Thread(target=thread_me))
-
-    for thread in thread_pool:
-        thread.start()
+    # Loop and do nothing since the threads will be running in the background
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        exit(0)
 
 if __name__ == '__main__':
     main()

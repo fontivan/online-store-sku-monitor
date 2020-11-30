@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "name": "Nvidia RTX 3080: Zotac AMP HoloBlack",
+      "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3080-amp-holoblack-10gb-gddr6x-video-card/15147703"
+    },
+    {
+      "name": "Nvidia RTX 3080: EVGA XC3 Ultra (A)",
+      "url": "https://www.bestbuy.ca/en-ca/product/evga-geforce-rtx-3080-xc3-ultra-gaming-10gb-gddr6x-video-card/15084753"
+    },
+    {
+      "name": "Nvidia RTX 3080: Zotac Trinity",
+      "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3080-trinity-10gb-gddr6x-video-card/14953249"
+    },
+    {
+      "name": "Nvidia RTX 3080: MSI Ventus",
+      "url": "https://www.bestbuy.ca/en-ca/product/msi-nvidia-geforce-rtx-3080-ventus-3x-10gb-gddr6x-video-card/14950588"
+    },
+    {
+      "name": "Nvidia RTX 3080: EVGA XC3 Ultra (B)",
+      "url": "https://www.bestbuy.ca/en-ca/product/evga-geforce-rtx-3080-xc3-ultra-gaming-10gb-gddr6x-video-card-english/14961449"
+    },
+    {
+      "name": "Nvidia RTX 3080: Asus TUF",
+      "url": "https://www.bestbuy.ca/en-ca/product/asus-tuf-gaming-nvidia-geforce-rtx-3080-10gb-gddr6x-video-card/14953248"
+    },
+    {
+      "name": "Nvidia RTX 3080: Asus ROG Strix",
+      "url": "https://www.bestbuy.ca/en-ca/product/asus-rog-strix-nvidia-geforce-rtx-3080-10gb-gddr6x-video-card/14954116"
+    },
+    {
+      "name": "Nvidia RTX 3080: Zotac Trinity OC",
+      "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3080-trinity-oc-10gb-gddr6x-video-card/15000077"
+    }
+  ],
+  "stores": [
+    "Online"
+  ]
+}

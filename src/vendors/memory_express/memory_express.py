@@ -1,6 +1,6 @@
-from vendor import Vendor
-import os
 from bs4 import BeautifulSoup
+import os
+from vendor import Vendor
 
 '''
 TODO: Add header

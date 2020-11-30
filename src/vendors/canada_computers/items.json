@@ -70,10 +70,8 @@
     }
   ],
   "stores": [
-    "Online Store",
     "Kanata",
-    "Ottawa Merivale",
-    "Ottawa Downtown",
-    "Ottawa Orleans"
+    "Online Store",
+    "Ottawa Merivale"
   ]
 }

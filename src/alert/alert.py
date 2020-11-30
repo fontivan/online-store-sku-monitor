@@ -9,6 +9,5 @@ class Alert:
     TODO: Add header
     '''
     def send_alert(self, item):
-        text = "Item in stock: '" + item['name'] + "' at '" + item['url'] + "'."
-        print(text)
+        print('Item in stock \'{}\' at \'{}\''.format(item['name'], item['url']))
         system("spd-say ALERT")
