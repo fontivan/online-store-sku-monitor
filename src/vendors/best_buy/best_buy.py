@@ -10,8 +10,8 @@ class BestBuy(Vendor):
     '''
     TODO: Add header
     '''
-    def __init__(self):
-        super().__init__("Best Buy", os.getcwd() + "/vendors/best_buy")
+    def __init__(self, logger):
+        super().__init__("Best Buy", os.getcwd() + "/vendors/best_buy", logger)
 
     '''
     TODO: Add header

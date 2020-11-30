@@ -10,6 +10,7 @@ TODO: Add header
 class Vendor:
 
     alert = Alert()
+    logger = None
     in_stock_result = "IN_STOCK"
     items_json_path = ""
     out_of_stock_result = "OUT_OF_STOCK"
@@ -42,7 +43,8 @@ class Vendor:
     '''
     TODO: Add header
     '''
-    def __init__(self, vendor_name, vendor_dir):
+    def __init__(self, vendor_name, vendor_dir, logger):
+        self.logger = logger
         self.vendor_name = vendor_name
         self.vendor_dir = vendor_dir
         self.items_json_path = self.vendor_dir + "/items.json"
@@ -61,9 +63,9 @@ class Vendor:
                     if result != self.out_of_stock_result:
                         self.alert.send_alert(item)
                     else:
-                        print('Item \'{}\' not in stock at vendor \'{}\'.'.format(item['name'], self.vendor_name))
+                        self.logger.info('Item \'{}\' not in stock at vendor \'{}\'.'.format(item['name'], self.vendor_name))
         else:
-            print('File not found at path \'{}\'.'.format(self.items_json_path))
+            self.logger.error('File not found at path \'{}\'.'.format(self.items_json_path))
 
     '''
     TODO: Add header
@@ -82,7 +84,7 @@ class Vendor:
         if request.status_code == 200:
             return request.text
         else:
-            print('Unable to get product page \'{}\''.format(item['url']))
+            self.logger.error('Unable to get product page \'{}\''.format(item['url']))
 
     '''
     TODO: Add header

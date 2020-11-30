@@ -10,8 +10,8 @@ class Newegg(Vendor):
     '''
     TODO: Add header
     '''
-    def __init__(self):
-        super().__init__("Newegg", os.getcwd() + "/vendors/newegg")
+    def __init__(self, logger):
+        super().__init__("Newegg", os.getcwd() + "/vendors/newegg", logger)
 
     '''
     TODO: Add header

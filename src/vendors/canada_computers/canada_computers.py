@@ -10,8 +10,8 @@ class CanadaComputers(Vendor):
     '''
     TODO: Add header
     '''
-    def __init__(self):
-        super().__init__("Canada Computers", os.getcwd() + "/vendors/canada_computers")
+    def __init__(self, logger):
+        super().__init__("Canada Computers", os.getcwd() + "/vendors/canada_computers", logger)
 
     '''
     TODO: Add header
