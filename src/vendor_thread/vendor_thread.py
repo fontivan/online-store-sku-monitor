@@ -25,7 +25,7 @@ class VendorThread (threading.Thread):
     TODO: Add header
     '''
     def run(self):
-        self.vendor.log_msg('Daemon thread started for vendor', logging.INFO)
+        self.vendor.log_msg('Daemon thread \'{}\' started for vendor'.format(self.getName()), logging.INFO)
         while True:
             self.vendor.check_stock_for_items()
             if not self.loop_forever:
