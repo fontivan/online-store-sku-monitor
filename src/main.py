@@ -45,10 +45,14 @@ TODO: Add header
 '''
 def main():
 
-    logger = configure_logger(False, True)
     loop_forever = True
+    log_to_stdout = True
+    log_to_file = False
 
-    # Loop and do nothing since the threads will be running in the background
+    logger = configure_logger(log_to_file, log_to_stdout)
+
+
+# Loop and do nothing since the threads will be running in the background
     try:
         # Start a thread for each vendor
         log_info(logger, 'Starting threads for vendors...')

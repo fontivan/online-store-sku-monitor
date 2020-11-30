@@ -7,7 +7,7 @@ TODO: Add header
 '''
 class VendorThread (threading.Thread):
 
-    sleep_time = 60
+    sleep_time = 60 # seconds
     vendor = None
     logger = None
     loop_forever = True

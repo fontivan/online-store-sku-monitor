@@ -1,28 +1,29 @@
-from alert import Alert
-from concurrent.futures import as_completed
-import logging
-import json
 import os
+import time
+
+import json
+import logging
 import random
 import requests
+from alert import Alert
+from concurrent.futures import as_completed
 from requests_futures.sessions import FuturesSession
-import time
 
 '''
 TODO: Add header
 '''
-class Vendor:
 
+
+class Vendor:
     alert = None
     logger = None
     in_stock_result = "IN_STOCK"
     items_json_path = None
     items_to_check = []
-    requests_timeout = 10 # seconds
+    max_timeout = 15  # seconds'
     out_of_stock_result = "OUT_OF_STOCK"
     session = None
     stores_to_check = []
-    thread_delay = 2 # seconds
     user_agent_headers = [
         # Android agents
         "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
@@ -51,6 +52,7 @@ class Vendor:
     '''
     TODO: Add header
     '''
+
     def __init__(self, vendor_name, vendor_dir, logger):
         self.logger = logger
         self.vendor_name = vendor_name
@@ -70,6 +72,7 @@ class Vendor:
     '''
     TODO: Add header
     '''
+
     def log_msg(self, msg, log_level):
         log = '[[ {} ]] :: {}'.format(self.vendor_name, msg)
         if log_level == logging.CRITICAL:
@@ -83,20 +86,19 @@ class Vendor:
         elif log_level == logging.DEBUG:
             self.logger.debug(log)
 
-
     '''
     TODO: Add header
     '''
+
     def check_stock_for_items(self):
 
-        request_headers = {
-            'User-Agent': '{}'.format(random.choice(self.user_agent_headers))
-        }
         futures = []
 
         for item in self.items_to_check:
             try:
-                future = self.session.get(item['url'], headers = request_headers)
+                future = self.session.get(item['url'], headers={
+                    'User-Agent': '{}'.format(random.choice(self.user_agent_headers))
+                }, timeout=self.max_timeout)
                 future.item = item
                 futures.append(future)
             except Exception as e:
@@ -106,29 +108,26 @@ class Vendor:
             try:
                 response = future.result()
                 if response.status_code == 200:
+                    self.logger.debug('Raw response text: \n ---------- {} \n----------'.format(response.text))
                     stock_result = self.parse_item_page(response.text, self.stores_to_check)
                     if stock_result == self.in_stock_result:
                         self.alert.send_alert(future.item)
                     elif stock_result == self.out_of_stock_result:
                         self.log_msg('\'{}\' not in stock.'.format(future.item['name']), logging.INFO)
                     else:
-                        self.report_error_and_sleep(future.item, None)
+                        raise ValueError('Unable to parse stock from webpage')
                 else:
-                    self.report_error_and_sleep(future.item, None)
+                    raise requests.HTTPError('Response code was \' {} \''.format(response.status_code))
             except Exception as e:
-                self.report_error_and_sleep(future.item, e)
+                self.log_msg('An error occurred attempting to check stock for \'{}\'. Caught exception: \'{}\'.'.format(
+                    future.item['name'], str(e)), logging.ERROR)
+                time.sleep(self.max_timeout)
 
         return None
 
     '''
     TODO: Add header
     '''
+
     def parse_item_page(self, item_page_html, stores_to_check):
         return self.out_of_stock_result
-
-    def report_error_and_sleep(self, item, e):
-        text = 'An error occurred attempting to check stock for \'{}\'.'.format(item['name'])
-        if e:
-            text = '{} Caused by exception: \'{}\''.format(text, str(e))
-        self.log_msg(text, logging.ERROR)
-        time.sleep(self.thread_delay * 4)
