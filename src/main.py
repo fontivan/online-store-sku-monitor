@@ -52,11 +52,11 @@ def main():
     try:
         # Start a thread for each vendor
         log_info(logger, 'Starting threads for vendors...')
-        VendorThread(AMD(logger), logger).start()
-        VendorThread(BestBuy(logger), logger).start(),
-        VendorThread(CanadaComputers(logger), logger).start(),
-        VendorThread(Newegg(logger), logger).start(),
-        VendorThread(MemoryExpress(logger), logger).start()
+        VendorThread(AMD(logger), logger, loop_forever).start()
+        VendorThread(BestBuy(logger), logger, loop_forever).start(),
+        VendorThread(CanadaComputers(logger), logger, loop_forever).start(),
+        VendorThread(Newegg(logger), logger, loop_forever).start(),
+        VendorThread(MemoryExpress(logger), logger, loop_forever).start()
         log_info(logger, 'All threads started!')
 
         # Loop forever, just letting the threads run in the background
