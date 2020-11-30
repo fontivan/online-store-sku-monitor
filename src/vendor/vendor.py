@@ -94,27 +94,6 @@ class Vendor:
         }
         futures = []
 
-        # for item in self.items_to_check:
-        #     try:
-        #         future = self.session.get(item['url'], headers = request_headers)
-        #         future.item = item
-        #         futures.append(future)
-        #
-        #         for future in as_completed(futures):
-        #             response = future.result()
-        #             if response.status_code == 200:
-        #                 stock_result = self.parse_item_page(response.text, self.stores_to_check)
-        #                 if stock_result == self.in_stock_result:
-        #                     self.alert.send_alert(future.item)
-        #                 elif stock_result == self.out_of_stock_result:
-        #                     self.log_msg('\'{}\' not in stock.'.format(future.item['name']), logging.INFO)
-        #                 else:
-        #                     self.report_error_and_sleep(future.item, None)
-        #             else:
-        #                 self.report_error_and_sleep(future.item, None)
-        #     except Exception as e:
-        #         self.report_error_and_sleep(item, e)
-
         for item in self.items_to_check:
             try:
                 future = self.session.get(item['url'], headers = request_headers)
