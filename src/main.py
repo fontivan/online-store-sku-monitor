@@ -37,30 +37,34 @@ def configure_logger(log_to_file, log_to_stdout):
 
     return logger
 
+def log_info(logger, msg):
+    logger.info('[[ {} ]] :: {}'.format('MAIN', msg))
+
 '''
 TODO: Add header
 '''
 def main():
 
     logger = configure_logger(False, True)
+    loop_forever = True
 
     # Loop and do nothing since the threads will be running in the background
     try:
         # Start a thread for each vendor
-        logger.info('Starting threads for vendors...')
+        log_info(logger, 'Starting threads for vendors...')
         VendorThread(AMD(logger), logger).start()
         VendorThread(BestBuy(logger), logger).start(),
         VendorThread(CanadaComputers(logger), logger).start(),
         VendorThread(Newegg(logger), logger).start(),
         VendorThread(MemoryExpress(logger), logger).start()
-        logger.info('All threads started!')
+        log_info(logger, 'All threads started!')
 
         # Loop forever, just letting the threads run in the background
-        while True:
+        while loop_forever:
             pass
     # Catch keyboard interrupt as the exit mechanism
     except KeyboardInterrupt:
-        logger.info('Exiting on keyboard interrupt')
+        log_info(logger, 'Exiting on keyboard interrupt')
         exit(0)
 
 if __name__ == '__main__':

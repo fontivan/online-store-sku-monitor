@@ -1,3 +1,4 @@
+import logging
 import threading
 import time
 
@@ -22,8 +23,8 @@ class VendorThread (threading.Thread):
     TODO: Add header
     '''
     def run(self):
-        self.logger.info('Started daemon thread for vendor \'{}\''.format(self.vendor.vendor_name))
+        self.vendor.log_msg('Daemon thread started for vendor', logging.INFO)
         while True:
             self.vendor.check_stock_for_items()
-            self.logger.info('Checked all items for vendor \'{}\'... sleeping for \'{}\' seconds'.format(self.vendor.vendor_name, self.sleep_time))
+            self.vendor.log_msg('Checked all items for vendor, sleeping for \'{}\' seconds'.format(self.sleep_time), logging.INFO)
             time.sleep(self.sleep_time)

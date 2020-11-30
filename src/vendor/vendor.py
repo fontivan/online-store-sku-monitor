@@ -1,4 +1,5 @@
 from alert import Alert
+import logging
 import json
 import os
 import random
@@ -52,6 +53,23 @@ class Vendor:
     '''
     TODO: Add header
     '''
+    def log_msg(self, msg, log_level):
+        log = '[[ {} ]] :: {}'.format(self.vendor_name, msg)
+        if log_level == logging.CRITICAL:
+            self.logger.critical(log)
+        elif log_level == logging.ERROR:
+            self.logger.error(log)
+        elif log_level == logging.WARNING:
+            self.logger.warning(log)
+        elif log_level == logging.INFO:
+            self.logger.info(log)
+        elif log_level == logging.DEBUG:
+            self.logger.debug(log)
+
+
+    '''
+    TODO: Add header
+    '''
     def check_stock_for_items(self):
         if os.path.isfile(self.items_json_path):
             with open(self.items_json_path, 'r') as file:
@@ -63,9 +81,9 @@ class Vendor:
                     if result != self.out_of_stock_result:
                         self.alert.send_alert(item)
                     else:
-                        self.logger.info('Item \'{}\' not in stock at vendor \'{}\'.'.format(item['name'], self.vendor_name))
+                        self.log_msg('\'{}\' not in stock.'.format(item['name']), logging.INFO)
         else:
-            self.logger.error('File not found at path \'{}\'.'.format(self.items_json_path))
+            self.log_msg('File not found at path \'{}\'.'.format(self.items_json_path), logging.ERROR)
 
     '''
     TODO: Add header
@@ -84,7 +102,7 @@ class Vendor:
         if request.status_code == 200:
             return request.text
         else:
-            self.logger.error('Unable to get product page \'{}\''.format(item['url']))
+            self.log_msg('Unable to get product page \'{}\''.format(item['url']), logging.ERROR)
 
     '''
     TODO: Add header
