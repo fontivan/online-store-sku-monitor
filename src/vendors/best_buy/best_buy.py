@@ -20,10 +20,10 @@ class BestBuy(Vendor):
 
         online_store = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
-            .find_all('div', attrs={'class': 'availabilityMessage_1MO75 container_3LC03'})
+            .find_all('span', attrs={'class': 'availabilityMessage_1MO75'})
 
-        for div in online_store:
-            if not 'Sold out online' in div.text:
+        for span in online_store:
+            if not 'Sold out online' in span.text and not 'Unavailable for store pickup' in span.text:
                 return self.in_stock_result
 
         return self.out_of_stock_result
