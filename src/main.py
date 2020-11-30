@@ -11,9 +11,11 @@ TODO: Add header
 def main():
 
     # Start a thread for each vendor
-    VendorThread(CanadaComputers()).start()
-    VendorThread(MemoryExpress()).start()
-    VendorThread(BestBuy()).start()
+    thread_pool = [
+        VendorThread(CanadaComputers()).start(),
+        VendorThread(MemoryExpress()).start(),
+        VendorThread(BestBuy()).start()
+    ]
 
     # Loop and do nothing since the threads will be running in the background
     try:

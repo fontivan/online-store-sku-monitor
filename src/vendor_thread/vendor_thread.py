@@ -14,12 +14,13 @@ class VendorThread (threading.Thread):
     '''
     def __init__(self, vendor):
         self.vendor = vendor
-        super().__init__()
+        super().__init__(daemon=True)
 
     '''
     TODO: Add header
     '''
     def run(self):
+        print('Started daemon thread for vendor \'{}\''.format(self.vendor.vendor_name))
         while True:
             self.vendor.check_stock_for_items()
             print('Checked all items for vendor \'{}\'... sleeping for \'{}\' seconds'.format(self.vendor.vendor_name, self.sleep_time))
