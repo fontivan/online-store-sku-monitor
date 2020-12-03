@@ -27,6 +27,22 @@
     {
       "name": "Nvidia RTX 3080 - Zotac Trinity OC",
       "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3080-trinity-oc-10gb-gddr6x-video-card/15000077"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Nvidia Founders Edition",
+      "url": "https://www.bestbuy.ca/en-ca/product/nvidia-geforce-rtx-3070-8gb-gddr6-video-card-only-at-best-buy/15078017"
+    },
+    {
+      "name": "Nvidia RTX 3070 - MSI Ventus 3X",
+      "url": "https://www.bestbuy.ca/en-ca/product/msi-nvidia-geforce-rtx-3070-ventus-3x-oc-8gb-gddr6-video-card/15038016"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA XC3 Black",
+      "url": "https://www.bestbuy.ca/en-ca/product/evga-geforce-rtx-3070-xc3-black-8gb-gddr6-video-card/15081879"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Zotac Twin Edge",
+      "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3070-twin-edge-8gb-gddr6x-video-card/15000079"
     }
   ],
   "stores": [

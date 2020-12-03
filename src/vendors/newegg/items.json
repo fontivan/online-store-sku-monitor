@@ -131,6 +131,86 @@
     {
       "name": "AMD RX 6800XT - Sapphire Nitro+",
       "url": "https://www.newegg.ca/p/N82E16814202391"
+    },
+    {
+      "name": "Nvidia RTX 3070 - MSI Gaming X Trio",
+      "url": "https://www.newegg.ca/p/N82E16814137603"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA XC3 Ultra",
+      "url": "https://www.newegg.ca/p/N82E16814487530"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA FTW3 Ultra",
+      "url": "https://www.newegg.ca/p/N82E16814487532"
+    },
+    {
+      "name": "Nvidia RTX 3070 - ASUS Rog Strix",
+      "url": "https://www.newegg.ca/p/N82E16814126458"
+    },
+    {
+      "name": "Nvidia RTX 3070 - MSI Ventus 3X OC",
+      "url": "https://www.newegg.ca/p/N82E16814137601"
+    },
+    {
+      "name": "Nvidia RTX 3070 - MSI Ventus 2X OC",
+      "url": "https://www.newegg.ca/p/N82E16814137602"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Asus Dual",
+      "url": "https://www.newegg.ca/p/N82E16814126459"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Zotac Twin Edge",
+      "url": "https://www.newegg.ca/p/N82E16814500501"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Gigabyte Gaming OC",
+      "url": "https://www.newegg.ca/p/N82E16814932342"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Asus Dual OC",
+      "url": "https://www.newegg.ca/p/N82E16814126460"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Asus TUF OC",
+      "url": "https://www.newegg.ca/p/N82E16814126461"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Gigabyte AORUS Master",
+      "url": "https://www.newegg.ca/p/N82E16814932359"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Gigabyte Eagle OC",
+      "url": "https://www.newegg.ca/p/N82E16814932343"
+    },
+    {
+      "name": "Nvidia RTX 3070 - MSI Ventus 2X",
+      "url": "https://www.newegg.ca/p/N82E16814137605"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA XC3 Gaming",
+      "url": "https://www.newegg.ca/p/N82E16814487529"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA FTW3 Gaming",
+      "url": "https://www.newegg.ca/p/N82E16814487531"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Gigabyte Vision OC",
+      "url": "https://www.newegg.ca/p/N82E16814932360"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Asus KO OC",
+      "url": "https://www.newegg.ca/p/N82E16814126466"
+    },
+    {
+      "name": "Nvidia RTX 3070 - EVGA XC3 Black",
+      "url": "https://www.newegg.ca/p/N82E16814487528"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Gigabyte Eagle",
+      "url": "https://www.newegg.ca/p/N82E16814932344"
     }
   ],
   "stores": [
