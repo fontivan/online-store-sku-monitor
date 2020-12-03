@@ -20,10 +20,11 @@ class Newegg(Vendor):
 
         online_store = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
-            .find_all('span', attrs={'class': 'product-by'})
+            .find_all('div', attrs={'class': 'product-buy'})
 
         for div in online_store:
-            if not 'Sold out' in div.text:
+            self.logger.debug(div.text)
+            if 'Add to cart' in div.text:
                 return self.in_stock_result
 
         return self.out_of_stock_result

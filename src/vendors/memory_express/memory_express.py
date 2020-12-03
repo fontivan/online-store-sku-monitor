@@ -25,7 +25,8 @@ class MemoryExpress(Vendor):
         for s1 in stores_to_check:
             for s2 in stores_with_stock_information:
                 if s1 in s2.text:
-                    if not 'Out of Stock' in s2.text:
+                    self.logger.debug(s2.text)
+                    if not 'Out of Stock' in s2.text and not 'Backorder' in s2.text:
                         return self.in_stock_result
 
         return self.out_of_stock_result
