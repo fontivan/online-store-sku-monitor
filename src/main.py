@@ -1,19 +1,42 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
+# MIT License
+#
+# Copyright (c) 2020 fontivan
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 import logging
+from datetime import datetime
+from vendor_thread.vendor_thread import VendorThread
 from vendors.amd import AMD
 from vendors.best_buy import BestBuy
 from vendors.canada_computers import CanadaComputers
-from vendors.newegg import Newegg
 from vendors.memory_express import MemoryExpress
-from vendor_thread.vendor_thread import VendorThread
+from vendors.newegg import Newegg
 
 '''
 TODO: Add header
 '''
-def configure_logger(log_to_file, log_to_stdout):
 
+
+def configure_logger(log_to_file, log_to_stdout):
     logger_name = "stockmonitor"
     logger = logging.getLogger(logger_name)
     # The global log level must be set lower then the level of the messages going to /any/ output, hence DEBUG
@@ -23,7 +46,7 @@ def configure_logger(log_to_file, log_to_stdout):
 
     # Log to file
     if log_to_file:
-        fh = logging.FileHandler(log_file_name, mode = 'w', encoding = 'utf-8')
+        fh = logging.FileHandler(log_file_name, mode='w', encoding='utf-8')
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)
         logger.addHandler(fh)
@@ -37,22 +60,24 @@ def configure_logger(log_to_file, log_to_stdout):
 
     return logger
 
+
 def log_info(logger, msg):
     logger.info('[[ {} ]] :: {}'.format('MAIN', msg))
+
 
 '''
 TODO: Add header
 '''
-def main():
 
+
+def main():
     loop_forever = True
     log_to_stdout = True
     log_to_file = False
 
     logger = configure_logger(log_to_file, log_to_stdout)
 
-
-# Loop and do nothing since the threads will be running in the background
+    # Loop and do nothing since the threads will be running in the background
     try:
         # Start a thread for each vendor
         log_info(logger, 'Starting threads for vendors...')
@@ -70,6 +95,7 @@ def main():
     except KeyboardInterrupt:
         log_info(logger, 'Exiting on keyboard interrupt')
         exit(0)
+
 
 if __name__ == '__main__':
     main()
