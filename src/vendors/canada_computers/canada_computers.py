@@ -36,7 +36,7 @@ class CanadaComputers(Vendor):
     '''
 
     def __init__(self, logger):
-        super().__init__("Canada Computers", os.getcwd() + "/vendors/canada_computers", logger)
+        super().__init__("Canada Computers", logger)
 
     '''
     TODO: Add header

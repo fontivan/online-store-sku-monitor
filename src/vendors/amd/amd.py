@@ -36,7 +36,7 @@ class AMD(Vendor):
     '''
 
     def __init__(self, logger):
-        super().__init__("AMD", os.getcwd() + "/vendors/amd", logger)
+        super().__init__("AMD", logger)
 
     '''
     TODO: Add header

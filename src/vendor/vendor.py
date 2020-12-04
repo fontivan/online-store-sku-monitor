@@ -69,17 +69,15 @@ class Vendor:
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763"
     ]
     vendor_name = None
-    vendor_dir = None
 
     '''
     TODO: Add header
     '''
 
-    def __init__(self, vendor_name, vendor_dir, logger):
+    def __init__(self, vendor_name, logger):
         self.logger = logger
         self.vendor_name = vendor_name
-        self.vendor_dir = vendor_dir
-        self.items_json_path = self.vendor_dir + "/items.json"
+        self.items_json_path = os.path.dirname(__file__) + '/../vendors/' + vendor_name.lower().replace(' ', '_') + '/items.json'
         self.alert = Alert(logger)
         self.session = FuturesSession()
 

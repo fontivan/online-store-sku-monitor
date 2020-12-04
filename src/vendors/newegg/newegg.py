@@ -36,7 +36,7 @@ class Newegg(Vendor):
     '''
 
     def __init__(self, logger):
-        super().__init__("Newegg", os.getcwd() + "/vendors/newegg", logger)
+        super().__init__("Newegg", logger)
 
     '''
     TODO: Add header

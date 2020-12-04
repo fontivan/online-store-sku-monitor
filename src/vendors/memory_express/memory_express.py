@@ -36,7 +36,7 @@ class MemoryExpress(Vendor):
     '''
 
     def __init__(self, logger):
-        super().__init__("Memory Express", os.getcwd() + "/vendors/memory_express", logger)
+        super().__init__("Memory Express", logger)
 
     '''
     TODO: Add header
