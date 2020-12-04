@@ -211,6 +211,10 @@
     {
       "name": "Nvidia RTX 3070 - Gigabyte Eagle",
       "url": "https://www.newegg.ca/p/N82E16814932344"
+    },
+    {
+      "name": "Nvidia RTX 3080 - MSI Suprim X",
+      "url": "https://www.newegg.ca/p/N82E16814137609"
     }
   ],
   "stores": [
