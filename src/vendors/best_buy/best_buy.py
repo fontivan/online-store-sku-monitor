@@ -50,7 +50,7 @@ class BestBuy(Vendor):
 
         for span in online_store:
             self.logger.debug(span.text)
-            if not 'Sold out online' in span.text and not 'Unavailable for store pickup' and not 'No longer available' in span.text:
+            if 'Available online' in span.text:
                 return self.in_stock_result
 
         return self.out_of_stock_result

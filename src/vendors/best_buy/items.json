@@ -43,6 +43,10 @@
     {
       "name": "Nvidia RTX 3070 - Zotac Twin Edge",
       "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3070-twin-edge-8gb-gddr6x-video-card/15000079"
+    },
+    {
+      "name": "Nvidia RTX 3070 - Zotac Twin Edge OC",
+      "url": "https://www.bestbuy.ca/en-ca/product/zotac-nvidia-geforce-rtx-3070-twin-edge-oc-8gb-gddr6x-video-card/15000078"
     }
   ],
   "stores": [
