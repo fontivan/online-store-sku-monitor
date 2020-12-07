@@ -84,7 +84,7 @@ def main():
         VendorThread(AMD(logger), logger, loop_forever, 75).start()
         VendorThread(BestBuy(logger), logger, loop_forever, 45).start(),
         VendorThread(CanadaComputers(logger), logger, loop_forever, 45).start(),
-        VendorThread(Newegg(logger), logger, loop_forever, 75).start(),
+        # VendorThread(Newegg(logger), logger, loop_forever, 75).start(),
         VendorThread(MemoryExpress(logger), logger, loop_forever, 75).start()
         log_info(logger, 'All threads started!')
 
