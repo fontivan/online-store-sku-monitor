@@ -1,77 +1,11 @@
 {
   "items": [
     {
-      "name": "Nvidia RTX 3080 - EVGA FTW3 Ultra",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181376"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte EAGLE OC",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181354"
-    },
-    {
-      "name": "Nvidia RTX 3080 - ASUS ROG Strix",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181842"
-    },
-    {
-      "name": "Nvidia RTX 3080 - MSI Gaming X Trio",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181348"
-    },
-    {
-      "name": "Nvidia RTX 3080 - EVGA XC3 Ultra",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181375"
-    },
-    {
-      "name": "Nvidia RTX 3080 - ZOTAC Trinity",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181420"
-    },
-    {
-      "name": "Nvidia RTX 3080 - MSI Ventus 3X OC",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181347"
-    },
-    {
-      "name": "Nvidia RTX 3080 - ASUS TUF",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181415"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte Gaming OC",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181353"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte AORUS Master",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=182754"
-    },
-    {
-      "name": "Nvidia RTX 3080 - EVGA XC3 Black",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181797"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte VISION OC",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=182755"
-    },
-    {
-      "name": "Nvidia RTX 3080 - EVGA XC3 Gaming",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=181798"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte AORUS Xtreme",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=183098"
-    },
-    {
-      "name": "Nvidia RTX 3080 - ZOTAC Trinity OC",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=183510"
-    },
-    {
-      "name": "Nvidia RTX 3080 - Gigabyte EAGLE",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=184166"
-    },
-    {
-      "name": "Nvidia RTX 3080 - ZOTAC AMP Holo",
-      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=184837"
+      "name": "Nvidia RTX 4090 - ASUS ROG Strix",
+      "url": "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=229558"
     }
   ],
   "stores": [
-    "Kanata",
-    "Online Store",
-    "Ottawa Merivale"
+    "Online / Main Warehouse"
   ]
 }

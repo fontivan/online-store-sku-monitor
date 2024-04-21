@@ -20,29 +20,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
+"""
+TODO: Add header
+"""
 
 from bs4 import BeautifulSoup
 from vendor import Vendor
 
-'''
-TODO: Add header
-'''
-
 
 class AMD(Vendor):
-    '''
+    """
     TODO: Add header
-    '''
+    """
 
     def __init__(self, logger):
         super().__init__("AMD", logger)
 
-    '''
-    TODO: Add header
-    '''
 
     def parse_item_page(self, item_page_html, stores_to_check):
+        """
+        TODO: Add header
+        """
         online_store = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
             .find_all('p', attrs={'class': 'product-out-of-stock'})
