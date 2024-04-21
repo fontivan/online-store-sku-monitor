@@ -1,0 +1,18 @@
+---
+# Whether or not to loop until keyboard interrupt or otherwise killed
+loop_forever: true
+
+# Whether or not to log to stdout
+log_to_stdout: true
+
+# Whether or not to log to a file
+log_to_file: false
+
+# How long to base the sleep timer on between polls
+sleep_timer: 60
+
+# The +/- range on the above timer
+sleep_range_rng_spread: 20
+
+# Whether or not to enable voice alerts
+voice_alerts: true

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2020-2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,11 +19,3 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""
-Module to import all the subcomponents
-"""
-
-from .alert import *
-from .vendor import *
-from .vendor_thread import *
-from .vendors import *

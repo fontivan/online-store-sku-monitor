@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2020-2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,28 +24,44 @@
 TODO: Add header
 """
 
-from bs4 import BeautifulSoup
-from vendor import Vendor
+import time
 
-class Newegg(Vendor):
+import logging
+import random
+import threading
+
+
+class VendorThread(threading.Thread):
     """
     TODO: Add header
     """
+    vendor = None
+    logger = None
+    config = None
 
-    def __init__(self, logger):
-        super().__init__("Newegg", logger)
+    def __init__(self, vendor, logger, config):
+        self.vendor = vendor
+        self.logger = logger
+        self.config = config
 
-    def parse_item_page(self, item_page_html, stores_to_check):
+        super().__init__(daemon=config['loop_forever'])
+
+    def run(self):
         """
         TODO: Add header
         """
-        online_store = BeautifulSoup(item_page_html, features="html.parser") \
-            .body \
-            .find_all('div', attrs={'class': 'product-buy'})
-
-        for div in online_store:
-            self.logger.debug(div.text)
-            if 'Add to cart' in div.text:
-                return self.in_stock_result
-
-        return self.out_of_stock_result
+        self.vendor.log_msg(
+            f"Daemon thread \'{self.name}\' started for vendor.",
+            logging.INFO
+        )
+        while True:
+            self.vendor.check_stock_for_items()
+            if not self.config['loop_forever']:
+                break
+            generated_time = self.config['sleep_timer'] + \
+                random.randrange(self.config['sleep_range_rng_spread'])
+            self.vendor.log_msg(
+                f"Checked all items for vendor, sleeping for \'{generated_time}\' seconds.",
+                logging.INFO
+            )
+            time.sleep(generated_time)

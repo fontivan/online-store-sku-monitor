@@ -1,0 +1,36 @@
+---
+# yamllint disable rule:line-length
+data:
+  # Store names should match one of the python files found in ./vendors
+  - name: amd_ca
+    skus:
+      - name: "AMD RX 7900XTX - AMD Reference"
+        url: "https://shop-ca-en.amd.com/amd-radeon-rx-7900-xtx-graphics/"
+    locations:
+      - Online
+  - name: bestbuy_ca
+    skus:
+      - name: "Nvidia RTX 4090 - Reference Model"
+        url: "https://www.bestbuy.ca/en-ca/product/nvidia-geforce-rtx-4090-24gb-gddr6-video-card/16531651"
+    locations:
+      - Online
+  - name: canadacomputers_ca
+    skus:
+      - name: "Nvidia RTX 4090 - ASUS ROG Strix"
+        url: "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=229558"
+    locations:
+      - "Online / Main Warehouse"
+  - name: memoryexpress_ca
+    skus:
+      - name: "Nvidia RTX 4090 - ASUS ROG Strix"
+        url: "https://www.memoryexpress.com/Products/MX00123007"
+    locations:
+      - "Online"
+# Newegg has aggressive bot detection and will IP ban you in just a few queries
+# - name: newegg_ca
+#   skus:
+#     - name: "Nvidia RTX 4090 - ASUS ROG Strix"
+#       url: "https://www.newegg.ca/asus-geforce-rtx-4090-rog-strix-rtx4090-o24g-gaming/p/N82E16814126593"
+#   locations:
+#     - Online
+# yamllint enable rule:line-length

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2020-2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,33 +19,3 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-"""
-TODO: Add header
-"""
-
-from bs4 import BeautifulSoup
-from vendor import Vendor
-
-
-class AMD(Vendor):
-    """
-    TODO: Add header
-    """
-
-    def __init__(self, logger):
-        super().__init__("AMD", logger)
-
-
-    def parse_item_page(self, item_page_html, stores_to_check):
-        """
-        TODO: Add header
-        """
-        online_store = BeautifulSoup(item_page_html, features="html.parser") \
-            .body \
-            .find_all('p', attrs={'class': 'product-out-of-stock'})
-
-        if len(online_store) == 0:
-            return self.in_stock_result
-
-        return self.out_of_stock_result

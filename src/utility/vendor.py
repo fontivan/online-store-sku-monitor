@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2020-2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,18 @@
 TODO: Add header
 """
 
+from abc import ABC, abstractmethod
 import builtins
 from concurrent.futures import as_completed
-import os
 import time
-import json
 import logging
 import random
 
 import requests
 from requests_futures.sessions import FuturesSession
 
-from alert import Alert
 
-
-class Vendor:
+class Vendor(ABC):
     """
     TODO: Add header
     """
@@ -53,25 +50,41 @@ class Vendor:
     stores_to_check = []
     user_agent_headers = [
         # Android agents
-        "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 7.1.2; AFTMM Build/NS6265; wv) \
+            AppleWebKit/537.36 (KHTML, like Gecko) \
+                Version/4.0 Chrome/70.0.3538.110 Mobile Safari/537.36",
         "Mozilla/5.0 (Android 9; Mobile; rv:68.0) Gecko/68.0 Firefox/68.0",
-        "Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.2 Chrome/71.0.3578.99 Mobile Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) \
+            AppleWebKit/537.36 (KHTML, like Gecko) \
+                SamsungBrowser/10.2 Chrome/71.0.3578.99 Mobile Safari/537.36",
         # iOS agents
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
-        "Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) \
+            AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        "Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) \
+            AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) \
+            AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
         # Linux agents
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
-        "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:65.0) Gecko/20100101 Firefox/65.0",
-        "Mozilla/5.0 (SMART-TV; Linux; Tizen 2.4.0) AppleWebkit/538.1 (KHTML, like Gecko) SamsungBrowser/1.1 TV Safari/538.1",
+        "Mozilla/5.0 (X11; Linux x86_64) \
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+        "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:65.0) \
+            Gecko/20100101 Firefox/65.0",
+        "Mozilla/5.0 (SMART-TV; Linux; Tizen 2.4.0) \
+            AppleWebkit/538.1 (KHTML, like Gecko) SamsungBrowser/1.1 TV Safari/538.1",
         # macOS agents
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/605.1.15 (KHTML, like Gecko)",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) \
+            AppleWebKit/605.1.15 (KHTML, like Gecko)",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) \
+            AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) \
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
         # Windows agents
-        "Mozilla/5.0 CK={} (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763"
+        "Mozilla/5.0 CK={} (Windows NT 6.1; WOW64; \
+            Trident/7.0; rv:11.0) like Gecko",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/18.17763"
     ]
     vendor_name = None
 
@@ -79,20 +92,13 @@ class Vendor:
     TODO: Add header
     """
 
-    def __init__(self, vendor_name, logger):
+    def __init__(self, vendor_data, logger, alert):
         self.logger = logger
-        self.vendor_name = vendor_name
-        self.items_json_path = os.path.dirname(__file__) + '/../vendors/' + vendor_name.lower().replace(' ', '_') + '/items.json'
-        self.alert = Alert(logger)
+        self.vendor_name = vendor_data['name']
+        self.items_to_check = vendor_data['skus']
+        self.stores_to_check = vendor_data['locations']
+        self.alert = alert
         self.session = FuturesSession()
-
-        if os.path.isfile(self.items_json_path):
-            with open(self.items_json_path, 'r', encoding='UTF-8') as file:
-                json_data = json.load(file)
-                self.items_to_check = json_data['items']
-                self.stores_to_check = json_data['stores']
-        else:
-            raise IOError(f"File not found: \'{self.items_json_path}\'.")
 
     def log_msg(self, msg, log_level):
         """
@@ -133,7 +139,7 @@ class Vendor:
                     self.logger.debug(f"Raw response text: \n ----- {response.text} \n -----")
                     stock_result = self.parse_item_page(response.text, self.stores_to_check)
                     if stock_result == self.in_stock_result:
-                        self.alert.send_alert(future.item)
+                        self.alert.send_alert(future.item, self.vendor_name)
                     elif stock_result == self.out_of_stock_result:
                         self.log_msg(
                             f"\'{future.item['name']}\' not in stock.",
@@ -145,13 +151,16 @@ class Vendor:
                     raise requests.HTTPError(f"Response code was \'{response.status_code}\'f")
             except builtins.Exception as e:
                 self.log_msg(
-                    f"An error occurred attempting to check stock for: \'{future.item['name']}\'. Caught exception: \'{str(e)}\'.",
+                    f"An error occurred attempting to check stock for: \
+                        \'{future.item['name']}\'. Caught exception: \'{str(e)}\'.",
                     logging.ERROR
                 )
                 time.sleep(self.max_timeout)
+                raise e
 
+    @abstractmethod
     def parse_item_page(self, item_page_html, stores_to_check):
         """
         TODO: Add header
         """
-        return self.out_of_stock_result
+        raise NotImplementedError("This method should be overridden!")

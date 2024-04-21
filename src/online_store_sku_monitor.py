@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2020-2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +28,26 @@ TODO: Add header
 
 import logging
 from datetime import datetime
+import os
 import sys
-from vendor_thread.vendor_thread import VendorThread
-from vendors.amd import AMD
-from vendors.best_buy import BestBuy
-from vendors.canada_computers import CanadaComputers
-from vendors.memory_express import MemoryExpress
-# from vendors.newegg import Newegg
+import time
+import yaml
 
+# Update path so that imports can use full module path
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
 
-def configure_logger(log_to_file, log_to_stdout):
+# pylint: disable=wrong-import-position
+from src.utility.alert import Alert
+from src.utility.vendor_thread import VendorThread
+from src.vendors.amd_ca import AMDCA
+from src.vendors.bestbuy_ca import BestBuyCA
+from src.vendors.canadacomputers_ca import CanadaComputersCA
+from src.vendors.memoryexpress_ca import MemoryExpressCA
+from src.vendors.newegg_ca import NeweggCA
+# pylint: enable=wrong-import-position
+
+def configure_logger(config):
     """
     TODO: Add header
     """
@@ -50,14 +60,14 @@ def configure_logger(log_to_file, log_to_stdout):
     log_file_name = datetime.now().strftime('/tmp/online_store_sku_monitor_%H_%M_%d_%m_%Y.log')
 
     # Log to file
-    if log_to_file:
+    if config['log_to_file']:
         fh = logging.FileHandler(log_file_name, mode='w', encoding='utf-8')
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)
         logger.addHandler(fh)
 
     # Log to stdout
-    if log_to_stdout:
+    if config['log_to_stdout']:
         ch = logging.StreamHandler()
         ch.setLevel(logging.INFO)
         ch.setFormatter(formatter)
@@ -77,28 +87,89 @@ def main():
     """
     TODO: Add header
     """
-    loop_forever = True
-    log_to_stdout = True
-    log_to_file = False
+    # Try to load configuration from file, but set some defaults in case it fails
+    config = {
+        "loop_forever": True,
+        "log_to_stdout": True,
+        "log_to_file": False,
+        "sleep_timer": 60,
+        "sleep_range_rng_spread": 20,
+        "voice_alerts": True
+    }
+    try:
+        with open('config.yaml', 'r', encoding='UTF-8') as config_file:
+            yaml_config = config_file.read()
+            read_config = yaml.load(yaml_config, Loader=yaml.SafeLoader)
+            config = read_config
+    except (FileNotFoundError, PermissionError):
+        pass
 
-    logger = configure_logger(log_to_file, log_to_stdout)
+    logger = configure_logger(config)
+    alert = Alert(logger, config)
 
     # Loop and do nothing since the threads will be running in the background
     try:
+        # Open data file
+        with open('data.yaml', 'r', encoding='UTF-8') as data_file:
+            yaml_text = data_file.read()
+            data = yaml.load(yaml_text, Loader=yaml.SafeLoader)['data']
+
         # Save the thread data
         thread_list = []
-        # Start a thread for each vendor
-        log_info(logger, 'Starting threads for vendors...')
-        thread_list.append(VendorThread(AMD(logger), logger, loop_forever, 75).start())
-        thread_list.append(VendorThread(BestBuy(logger), logger, loop_forever, 45).start())
-        thread_list.append(VendorThread(CanadaComputers(logger), logger, loop_forever, 45).start())
-        # thread_list.append(VendorThread(Newegg(logger), logger, loop_forever, 75).start())
-        thread_list.append(VendorThread(MemoryExpress(logger), logger, loop_forever, 75).start())
-        log_info(logger, 'All threads started!')
+
+        # Loop over data
+        for store in data:
+            match(store['name']):
+                case 'amd_ca':
+                    thread_list.append(
+                        VendorThread(
+                            AMDCA(store, logger, alert),
+                            logger,
+                            config
+                        )
+                    )
+                case 'bestbuy_ca':
+                    thread_list.append(
+                        VendorThread(
+                            BestBuyCA(store, logger, alert),
+                            logger,
+                            config
+                        )
+                    )
+                case 'canadacomputers_ca':
+                    thread_list.append(
+                        VendorThread(
+                            CanadaComputersCA(store, logger, alert),
+                            logger,
+                            config
+                        )
+                    )
+                case 'newegg_ca':
+                    thread_list.append(
+                        VendorThread(
+                            NeweggCA(store, logger, alert),
+                            logger,
+                            config
+                        )
+                    )
+                case 'memoryexpress_ca':
+                    thread_list.append(
+                        VendorThread(
+                            MemoryExpressCA(store, logger, alert),
+                            logger,
+                            config
+                        )
+                    )
+                case _:
+                    logger.error("Unknown store: \'%s\'", store['name'])
+
+        # Start all the threads
+        for thread in thread_list:
+            thread.start()
 
         # Loop forever, just letting the threads run in the background
-        while loop_forever:
-            pass
+        while config['loop_forever']:
+            time.sleep(999999999)
     # Catch keyboard interrupt as the exit mechanism
     except KeyboardInterrupt:
         log_info(logger, 'Exiting on keyboard interrupt')
