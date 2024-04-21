@@ -20,23 +20,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""
+TODO: Add header
+"""
+
+import builtins
+from concurrent.futures import as_completed
 import os
 import time
-
 import json
 import logging
 import random
+
 import requests
-from alert import Alert
-from concurrent.futures import as_completed
 from requests_futures.sessions import FuturesSession
 
-'''
-TODO: Add header
-'''
+from alert import Alert
 
 
 class Vendor:
+    """
+    TODO: Add header
+    """
     alert = None
     logger = None
     in_stock_result = "IN_STOCK"
@@ -70,9 +75,9 @@ class Vendor:
     ]
     vendor_name = None
 
-    '''
+    """
     TODO: Add header
-    '''
+    """
 
     def __init__(self, vendor_name, logger):
         self.logger = logger
@@ -82,19 +87,18 @@ class Vendor:
         self.session = FuturesSession()
 
         if os.path.isfile(self.items_json_path):
-            with open(self.items_json_path, 'r') as file:
+            with open(self.items_json_path, 'r', encoding='UTF-8') as file:
                 json_data = json.load(file)
                 self.items_to_check = json_data['items']
                 self.stores_to_check = json_data['stores']
         else:
-            raise IOError('File not found \'{}\''.format(self.items_json_path))
-
-    '''
-    TODO: Add header
-    '''
+            raise IOError(f"File not found: \'{self.items_json_path}\'.")
 
     def log_msg(self, msg, log_level):
-        log = '[[ {} ]] :: {}'.format(self.vendor_name, msg)
+        """
+        TODO: Add header
+        """
+        log = f"[[ {self.vendor_name} ]] :: {msg}"
         if log_level == logging.CRITICAL:
             self.logger.critical(log)
         elif log_level == logging.ERROR:
@@ -106,48 +110,48 @@ class Vendor:
         elif log_level == logging.DEBUG:
             self.logger.debug(log)
 
-    '''
-    TODO: Add header
-    '''
-
     def check_stock_for_items(self):
-
+        """
+        TODO: Add header
+        """
         futures = []
 
         for item in self.items_to_check:
             try:
                 future = self.session.get(item['url'], headers={
-                    'User-Agent': '{}'.format(random.choice(self.user_agent_headers))
+                    'User-Agent': str(random.choice(self.user_agent_headers))
                 }, timeout=self.max_timeout)
                 future.item = item
                 futures.append(future)
-            except Exception as e:
-                self.report_error_and_sleep(item, e)
+            except builtins.Exception as e:
+                raise e
 
         for future in as_completed(futures):
             try:
                 response = future.result()
                 if response.status_code == 200:
-                    self.logger.debug('Raw response text: \n ---------- {} \n----------'.format(response.text))
+                    self.logger.debug(f"Raw response text: \n ----- {response.text} \n -----")
                     stock_result = self.parse_item_page(response.text, self.stores_to_check)
                     if stock_result == self.in_stock_result:
                         self.alert.send_alert(future.item)
                     elif stock_result == self.out_of_stock_result:
-                        self.log_msg('\'{}\' not in stock.'.format(future.item['name']), logging.INFO)
+                        self.log_msg(
+                            f"\'{future.item['name']}\' not in stock.",
+                            logging.INFO
+                        )
                     else:
                         raise ValueError('Unable to parse stock from webpage')
                 else:
-                    raise requests.HTTPError('Response code was \' {} \''.format(response.status_code))
-            except Exception as e:
-                self.log_msg('An error occurred attempting to check stock for \'{}\'. Caught exception: \'{}\'.'.format(
-                    future.item['name'], str(e)), logging.ERROR)
+                    raise requests.HTTPError(f"Response code was \'{response.status_code}\'f")
+            except builtins.Exception as e:
+                self.log_msg(
+                    f"An error occurred attempting to check stock for: \'{future.item['name']}\'. Caught exception: \'{str(e)}\'.",
+                    logging.ERROR
+                )
                 time.sleep(self.max_timeout)
 
-        return None
-
-    '''
-    TODO: Add header
-    '''
-
     def parse_item_page(self, item_page_html, stores_to_check):
+        """
+        TODO: Add header
+        """
         return self.out_of_stock_result

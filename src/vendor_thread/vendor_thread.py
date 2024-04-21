@@ -20,26 +20,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""
+TODO: Add header
+"""
+
 import time
 
 import logging
 import random
 import threading
 
-'''
-TODO: Add header
-'''
-
 
 class VendorThread(threading.Thread):
+    """
+    TODO: Add header
+    """
     sleep_time = None
     vendor = None
     logger = None
     loop_forever = True
-
-    '''
-    TODO: Add header
-    '''
 
     def __init__(self, vendor, logger, loop_forever, sleep_time):
         self.logger = logger
@@ -48,17 +47,21 @@ class VendorThread(threading.Thread):
         self.sleep_time = sleep_time
         super().__init__(daemon=loop_forever)
 
-    '''
-    TODO: Add header
-    '''
-
     def run(self):
-        self.vendor.log_msg('Daemon thread \'{}\' started for vendor'.format(self.getName()), logging.INFO)
+        """
+        TODO: Add header
+        """
+        self.vendor.log_msg(
+            f"Daemon thread \'{self.name}\' started for vendor.",
+            logging.INFO
+        )
         while True:
             self.vendor.check_stock_for_items()
             if not self.loop_forever:
                 break
             generated_time = self.sleep_time + random.randrange(20)
-            self.vendor.log_msg('Checked all items for vendor, sleeping for \'{}\' seconds'.format(generated_time),
-                                logging.INFO)
+            self.vendor.log_msg(
+                f"Checked all items for vendor, sleeping for \'{generated_time}\' seconds.",
+                logging.INFO
+            )
             time.sleep(generated_time)

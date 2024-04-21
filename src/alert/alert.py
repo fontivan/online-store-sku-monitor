@@ -20,23 +20,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from os import system
-
-'''
+"""
 TODO: Add header
-'''
-
+"""
 
 class Alert:
+    """
+    TODO: Add header
+    """
     logger = None
 
     def __init__(self, logger):
         self.logger = logger
 
-    '''
-    TODO: Add header
-    '''
-
     def send_alert(self, item):
-        self.logger.critical('Item in stock \'{}\' at \'{}\''.format(item['name'], item['url']))
-        system('spd-say ALERT')
+        """
+        TODO: Add header
+        """
+        self.logger.critical(f"Item in stock \'{item['name']} at \'{item['url']}\'\'")

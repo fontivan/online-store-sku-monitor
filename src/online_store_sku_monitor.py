@@ -22,27 +22,32 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""
+TODO: Add header
+"""
+
 import logging
 from datetime import datetime
+import sys
 from vendor_thread.vendor_thread import VendorThread
 from vendors.amd import AMD
 from vendors.best_buy import BestBuy
 from vendors.canada_computers import CanadaComputers
 from vendors.memory_express import MemoryExpress
-from vendors.newegg import Newegg
-
-'''
-TODO: Add header
-'''
+# from vendors.newegg import Newegg
 
 
 def configure_logger(log_to_file, log_to_stdout):
-    logger_name = "stockmonitor"
+    """
+    TODO: Add header
+    """
+    logger_name = "online-store-sku-monitor"
     logger = logging.getLogger(logger_name)
-    # The global log level must be set lower then the level of the messages going to /any/ output, hence DEBUG
+    # The global log level must be set lower then the level
+    # of the messages going to /any/ output, hence DEBUG
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('[[ %(asctime)s ]] :: [[ %(levelname)s ]] :: %(message)s')
-    log_file_name = datetime.now().strftime('/tmp/stockmonitor_%H_%M_%d_%m_%Y.log')
+    log_file_name = datetime.now().strftime('/tmp/online_store_sku_monitor_%H_%M_%d_%m_%Y.log')
 
     # Log to file
     if log_to_file:
@@ -62,15 +67,16 @@ def configure_logger(log_to_file, log_to_stdout):
 
 
 def log_info(logger, msg):
-    logger.info('[[ {} ]] :: {}'.format('MAIN', msg))
-
-
-'''
-TODO: Add header
-'''
+    """
+    TODO: Add header
+    """
+    logger.info(f"[[ Main ]] :: {msg}")
 
 
 def main():
+    """
+    TODO: Add header
+    """
     loop_forever = True
     log_to_stdout = True
     log_to_file = False
@@ -79,13 +85,15 @@ def main():
 
     # Loop and do nothing since the threads will be running in the background
     try:
+        # Save the thread data
+        thread_list = []
         # Start a thread for each vendor
         log_info(logger, 'Starting threads for vendors...')
-        VendorThread(AMD(logger), logger, loop_forever, 75).start()
-        VendorThread(BestBuy(logger), logger, loop_forever, 45).start(),
-        VendorThread(CanadaComputers(logger), logger, loop_forever, 45).start(),
-        # VendorThread(Newegg(logger), logger, loop_forever, 75).start(),
-        VendorThread(MemoryExpress(logger), logger, loop_forever, 75).start()
+        thread_list.append(VendorThread(AMD(logger), logger, loop_forever, 75).start())
+        thread_list.append(VendorThread(BestBuy(logger), logger, loop_forever, 45).start())
+        thread_list.append(VendorThread(CanadaComputers(logger), logger, loop_forever, 45).start())
+        # thread_list.append(VendorThread(Newegg(logger), logger, loop_forever, 75).start())
+        thread_list.append(VendorThread(MemoryExpress(logger), logger, loop_forever, 75).start())
         log_info(logger, 'All threads started!')
 
         # Loop forever, just letting the threads run in the background
@@ -94,7 +102,7 @@ def main():
     # Catch keyboard interrupt as the exit mechanism
     except KeyboardInterrupt:
         log_info(logger, 'Exiting on keyboard interrupt')
-        exit(0)
+        sys.exit(0)
 
 
 if __name__ == '__main__':
