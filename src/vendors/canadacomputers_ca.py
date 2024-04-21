@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,4 +20,37 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from .vendor import *
+"""
+TODO: Add header
+"""
+
+from bs4 import BeautifulSoup
+from src.utility.vendor import Vendor
+
+
+class CanadaComputersCA(Vendor):
+    """
+    TODO: Add header
+    """
+
+    def parse_item_page(self, item_page_html, stores_to_check):
+        """
+        TODO: Add header
+        """
+        stock_info_div = BeautifulSoup(item_page_html, features="html.parser") \
+            .body \
+            .find('div', attrs={'class': 'stocklevel-pop'})
+
+        rejoined_html = "".join(str(v) for v in stock_info_div.contents)
+
+        stores_with_stock_information = BeautifulSoup(rejoined_html, features="html.parser") \
+            .find_all('div', attrs={'class': 'row'})
+
+        for s1 in stores_to_check:
+            for s2 in stores_with_stock_information:
+                if s1 in s2.text:
+                    self.logger.debug(s2.text)
+                    if not '-' in s2.text:
+                        return self.in_stock_result
+
+        return self.out_of_stock_result

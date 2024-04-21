@@ -20,4 +20,48 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from .newegg import *
+"""
+TODO: Add header
+"""
+
+import time
+
+import logging
+import random
+import threading
+
+
+class VendorThread(threading.Thread):
+    """
+    TODO: Add header
+    """
+    vendor = None
+    logger = None
+    config = None
+
+    def __init__(self, vendor, logger, config):
+        self.vendor = vendor
+        self.logger = logger
+        self.config = config
+
+        super().__init__(daemon=config['loop_forever'])
+
+    def run(self):
+        """
+        TODO: Add header
+        """
+        self.vendor.log_msg(
+            f"Daemon thread \'{self.name}\' started for vendor.",
+            logging.INFO
+        )
+        while True:
+            self.vendor.check_stock_for_items()
+            if not self.config['loop_forever']:
+                break
+            generated_time = self.config['sleep_timer'] + \
+                random.randrange(self.config['sleep_range_rng_spread'])
+            self.vendor.log_msg(
+                f"Checked all items for vendor, sleeping for \'{generated_time}\' seconds.",
+                logging.INFO
+            )
+            time.sleep(generated_time)

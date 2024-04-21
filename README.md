@@ -1,10 +1,18 @@
-# estore-sku-monitor
+# online-store-sku-monitor
+
+## introduction
 - Monitor stock of new tech products and alert on found items
-- Items are configured in stockmonitor/src/vendors/${vendor-name}/items.json
-- Individual vendors can be disabled in stockmonitor.py by commenting them out
-- There are also a few boolean flags in stockmonitor.py for controlling looping and logging behaviour
-- Run from src:
+- Items are configured in src/data.yaml
+- A few control variables can be configured in data.yaml for controlling looping and logging behaviour
+
+## usage
+
+Run using make:
 
 ```bash
 make run
 ```
+
+# voice alert
+
+Voice alerts are configured using `pyttsx3` and will be enabled if a compatible engine backend is available.

@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,27 +25,27 @@ TODO: Add header
 """
 
 from bs4 import BeautifulSoup
-from vendor import Vendor
+from src.utility.vendor import Vendor
 
 
-class AMD(Vendor):
+class MemoryExpressCA(Vendor):
     """
     TODO: Add header
     """
-
-    def __init__(self, logger):
-        super().__init__("AMD", logger)
-
 
     def parse_item_page(self, item_page_html, stores_to_check):
         """
         TODO: Add header
         """
-        online_store = BeautifulSoup(item_page_html, features="html.parser") \
+        stores_with_stock_information = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
-            .find_all('p', attrs={'class': 'product-out-of-stock'})
+            .find_all('div', attrs={'class': 'c-capr-inventory-store'})
 
-        if len(online_store) == 0:
-            return self.in_stock_result
+        for s1 in stores_to_check:
+            for s2 in stores_with_stock_information:
+                if s1 in s2.text:
+                    self.logger.debug(s2.text)
+                    if not 'Out of Stock' in s2.text and not 'Backorder' in s2.text:
+                        return self.in_stock_result
 
         return self.out_of_stock_result

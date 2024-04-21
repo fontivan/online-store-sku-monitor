@@ -19,11 +19,3 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""
-Module to import all the subcomponents
-"""
-
-from .alert import *
-from .vendor import *
-from .vendor_thread import *
-from .vendors import *

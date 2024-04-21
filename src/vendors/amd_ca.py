@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020 fontivan
+# Copyright (c) 2024 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,13 @@ TODO: Add header
 """
 
 from bs4 import BeautifulSoup
-from vendor import Vendor
+from src.utility.vendor import Vendor
 
-class BestBuy(Vendor):
+
+class AMDCA(Vendor):
     """
     TODO: Add header
     """
-
-    def __init__(self, logger):
-        super().__init__("Best Buy", logger)
 
     def parse_item_page(self, item_page_html, stores_to_check):
         """
@@ -41,11 +39,9 @@ class BestBuy(Vendor):
         """
         online_store = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
-            .find_all('span', attrs={'class': 'availabilityMessage_1MO75'})
+            .find_all('p', attrs={'class': 'product-out-of-stock'})
 
-        for span in online_store:
-            self.logger.debug(span.text)
-            if 'Available online' in span.text:
-                return self.in_stock_result
+        if len(online_store) == 0:
+            return self.in_stock_result
 
         return self.out_of_stock_result
