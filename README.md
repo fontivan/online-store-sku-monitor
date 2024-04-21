@@ -2,8 +2,8 @@
 
 ## introduction
 - Monitor stock of new tech products and alert on found items
-- Items are configured in src/data.yaml
-- A few control variables can be configured in data.yaml for controlling looping and logging behaviour
+- Stores and SKUs are configured in `src/data.yaml`
+- A few control variables can be configured in `src/config.yaml` for controlling looping and logging behaviour
 
 ## usage
 
