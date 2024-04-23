@@ -21,7 +21,9 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This module encompasses functionalities related to the Vendor abstract class,
+providing a foundation for implementing vendor-specific operations in online
+commerce analysis.
 """
 
 from abc import ABC, abstractmethod
@@ -37,8 +39,9 @@ from requests_futures.sessions import FuturesSession
 
 class Vendor(ABC):
     """
-    TODO: Add header
+    Abstract base class for vendor-specific operations in online commerce analysis.
     """
+
     alert = None
     logger = None
     in_stock_result = "IN_STOCK"
@@ -88,10 +91,6 @@ class Vendor(ABC):
     ]
     vendor_name = None
 
-    """
-    TODO: Add header
-    """
-
     def __init__(self, vendor_data, logger, alert):
         self.logger = logger
         self.vendor_name = vendor_data['name']
@@ -102,7 +101,11 @@ class Vendor(ABC):
 
     def log_msg(self, msg, log_level):
         """
-        TODO: Add header
+        Logs a message at the specified log level, prefixed with the vendor's name.
+
+        Args:
+            msg (str): The message to be logged.
+            log_level (int): The log level at which the message should be logged.
         """
         log = f"[[ {self.vendor_name} ]] :: {msg}"
         if log_level == logging.CRITICAL:
@@ -118,7 +121,7 @@ class Vendor(ABC):
 
     def check_stock_for_items(self):
         """
-        TODO: Add header
+        Checks the stock availability for items asynchronously.
         """
         futures = []
 
@@ -161,6 +164,13 @@ class Vendor(ABC):
     @abstractmethod
     def parse_item_page(self, item_page_html, stores_to_check):
         """
-        TODO: Add header
+        Parses the HTML content of an item page to determine the availability of the item.
+
+        Args:
+            item_page_html (str): The HTML content of the item page.
+            stores_to_check (list): A list of stores to check for the item's availability.
+
+        Returns:
+            str: Result indicating the availability status of the item.
         """
         raise NotImplementedError("This method should be overridden!")

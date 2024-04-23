@@ -21,7 +21,8 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This module contains the Alert class, which handles alerts for item
+availability, including voice alerts if enabled.
 """
 
 import threading
@@ -30,8 +31,9 @@ import pyttsx3
 
 class Alert:
     """
-    TODO: Add header
+    Class for handling alerts for item availability, including voice alerts if enabled.
     """
+
     engine = None
     logger = None
     config = None
@@ -42,6 +44,13 @@ class Alert:
     voice_alert_thread = None
 
     def __init__(self, logger, config):
+        """
+        Initializes the Alert object with the specified logger and configuration.
+
+        Args:
+            logger: The logger object for logging messages.
+            config: Configuration settings for the alert system.
+        """
         self.logger = logger
         self.config = config
 
@@ -58,9 +67,14 @@ class Alert:
                 self.voice_alert_thread.start()
             except OSError as e:
                 self.logger.warn(f"Voice alerts unavailable due to exception: \'{e}\'")
+
     def send_alert(self, item, vendor_name):
         """
-        TODO: Add header
+        Sends an alert for the availability of an item.
+
+        Args:
+            item: The item for which the alert is generated.
+            vendor_name: The name of the vendor.
         """
         msg = f"Item in stock \'{item['name']}\'"
         self.logger.critical(f"[[ {vendor_name} ]] :: {msg} at \'{item['url']}")
@@ -69,7 +83,10 @@ class Alert:
 
     def send_voice_msg_to_queue(self, msg):
         """
-        TODO: Add header
+        Adds a voice message to the queue for processing.
+
+        Args:
+            msg: The message to be added to the queue.
         """
         # Replace _ca with ". c a" so the output sounds better
         msg = msg.replace("_ca", " . c a")
@@ -82,7 +99,7 @@ class Alert:
 
     def process_voice_queue(self):
         """
-        TODO: Add header
+        Processes the voice alert queue, speaking messages using the TTS engine.
         """
         try:
             while True:

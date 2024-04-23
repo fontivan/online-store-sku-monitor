@@ -21,11 +21,11 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This module contains the VendorThread class, which represents a thread
+responsible for continuously checking the stock status of items for a specific vendor.
 """
 
 import time
-
 import logging
 import random
 import threading
@@ -33,13 +33,24 @@ import threading
 
 class VendorThread(threading.Thread):
     """
-    TODO: Add header
+    Thread class for continuously checking the stock status of items for
+    a specific vendor.
     """
+
     vendor = None
     logger = None
     config = None
 
     def __init__(self, vendor, logger, config):
+        """
+        Initializes the VendorThread with the specified vendor, logger,
+        and configuration.
+
+        Args:
+            vendor: The vendor object to be monitored.
+            logger: The logger object for logging messages.
+            config: Configuration settings for the thread.
+        """
         self.vendor = vendor
         self.logger = logger
         self.config = config
@@ -48,7 +59,7 @@ class VendorThread(threading.Thread):
 
     def run(self):
         """
-        TODO: Add header
+        Executes the thread's main loop for checking the stock status of items.
         """
         self.vendor.log_msg(
             f"Daemon thread \'{self.name}\' started for vendor.",

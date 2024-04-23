@@ -23,7 +23,8 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This script orchestrates the monitoring of online store SKUs by initializing 
+vendor threads and managing logging and configuration.
 """
 
 import logging
@@ -49,24 +50,29 @@ from src.vendors.newegg_ca import NeweggCA
 
 def configure_logger(config):
     """
-    TODO: Add header
+    Configures the logger based on the provided configuration settings.
+
+    Args:
+        config: The configuration settings for logging.
+
+    Returns:
+        logger: The configured logger object.
     """
     logger_name = "online-store-sku-monitor"
     logger = logging.getLogger(logger_name)
-    # The global log level must be set lower then the level
-    # of the messages going to /any/ output, hence DEBUG
+    # Set global log level to DEBUG
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('[[ %(asctime)s ]] :: [[ %(levelname)s ]] :: %(message)s')
     log_file_name = datetime.now().strftime('/tmp/online_store_sku_monitor_%H_%M_%d_%m_%Y.log')
 
-    # Log to file
+    # Log to file if enabled
     if config['log_to_file']:
         fh = logging.FileHandler(log_file_name, mode='w', encoding='utf-8')
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)
         logger.addHandler(fh)
 
-    # Log to stdout
+    # Log to stdout if enabled
     if config['log_to_stdout']:
         ch = logging.StreamHandler()
         ch.setLevel(logging.INFO)
@@ -78,16 +84,20 @@ def configure_logger(config):
 
 def log_info(logger, msg):
     """
-    TODO: Add header
+    Logs an informational message with the specified logger.
+
+    Args:
+        logger: The logger object.
+        msg: The message to be logged.
     """
     logger.info(f"[[ Main ]] :: {msg}")
 
 
 def main():
     """
-    TODO: Add header
+    Main function for executing the script.
     """
-    # Try to load configuration from file, but set some defaults in case it fails
+    # Try to load configuration from file, set defaults if it fails
     config = {
         "loop_forever": True,
         "log_to_stdout": True,
@@ -107,7 +117,6 @@ def main():
     logger = configure_logger(config)
     alert = Alert(logger, config)
 
-    # Loop and do nothing since the threads will be running in the background
     try:
         # Open data file
         with open('data.yaml', 'r', encoding='UTF-8') as data_file:
@@ -167,10 +176,10 @@ def main():
         for thread in thread_list:
             thread.start()
 
-        # Loop forever, just letting the threads run in the background
+        # Loop forever, letting the threads run in the background
         while config['loop_forever']:
             time.sleep(999999999)
-    # Catch keyboard interrupt as the exit mechanism
+    # Catch keyboard interrupt for exit
     except KeyboardInterrupt:
         log_info(logger, 'Exiting on keyboard interrupt')
         sys.exit(0)
