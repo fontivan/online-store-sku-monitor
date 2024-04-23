@@ -21,7 +21,8 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This module provides the AMDCA (AMD.ca) class, which is designed to handle 
+vendor-specific operations related to online commerce analysis.
 """
 
 from bs4 import BeautifulSoup
@@ -30,12 +31,22 @@ from src.utility.vendor import Vendor
 
 class AMDCA(Vendor):
     """
-    TODO: Add header
+    Subclass of Vendor specifically tailored for AMDCA operations, 
+    facilitating vendor-specific parsing and analysis of online commerce data.
     """
 
     def parse_item_page(self, item_page_html, stores_to_check):
         """
-        TODO: Add header
+        Parses the HTML content of an item page to check the availability of 
+        the item across various online stores.
+
+        Args:
+            item_page_html (str): The HTML content of the item page.
+            stores_to_check (list): A list of online stores to check for the 
+                                    item's availability.
+
+        Returns:
+            str: Result indicating the availability status of the item.
         """
         online_store = BeautifulSoup(item_page_html, features="html.parser") \
             .body \

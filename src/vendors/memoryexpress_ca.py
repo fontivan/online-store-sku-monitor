@@ -21,7 +21,9 @@
 # SOFTWARE.
 
 """
-TODO: Add header
+This module contains functionalities specific to MemoryExpressCA,
+a subclass of Vendor, focusing on operations related to parsing and 
+analyzing Memory Express' online commerce data.
 """
 
 from bs4 import BeautifulSoup
@@ -30,12 +32,22 @@ from src.utility.vendor import Vendor
 
 class MemoryExpressCA(Vendor):
     """
-    TODO: Add header
+    Subclass of Vendor tailored for MemoryExpressCA operations, providing 
+    methods for parsing and analyzing Memory Express' online commerce data.
     """
 
     def parse_item_page(self, item_page_html, stores_to_check):
         """
-        TODO: Add header
+        Parses the HTML content of an item page to determine the availability
+        of the item on MemoryExpressCA.
+
+        Args:
+            item_page_html (str): The HTML content of the item page.
+            stores_to_check (list): A list of online stores to check for the
+                                    item's availability.
+
+        Returns:
+            str: Result indicating the availability status of the item.
         """
         stores_with_stock_information = BeautifulSoup(item_page_html, features="html.parser") \
             .body \
@@ -45,7 +57,7 @@ class MemoryExpressCA(Vendor):
             for s2 in stores_with_stock_information:
                 if s1 in s2.text:
                     self.logger.debug(s2.text)
-                    if not 'Out of Stock' in s2.text and not 'Backorder' in s2.text:
+                    if 'Out of Stock' not in s2.text and 'Backorder' not in s2.text:
                         return self.in_stock_result
 
         return self.out_of_stock_result
