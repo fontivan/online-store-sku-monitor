@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2020-2024 fontivan
+# Copyright (c) 2020-2025 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -128,49 +128,52 @@ def main():
 
         # Loop over data
         for store in data:
-            match(store['name']):
-                case 'amd_ca':
-                    thread_list.append(
-                        VendorThread(
-                            AMDCA(store, logger, alert),
-                            logger,
-                            config
+            if store['enabled']:
+                match(store['name']):
+                    case 'amd_ca':
+                        thread_list.append(
+                            VendorThread(
+                                AMDCA(store, logger, alert),
+                                logger,
+                                config
+                            )
                         )
-                    )
-                case 'bestbuy_ca':
-                    thread_list.append(
-                        VendorThread(
-                            BestBuyCA(store, logger, alert),
-                            logger,
-                            config
+                    case 'bestbuy_ca':
+                        thread_list.append(
+                            VendorThread(
+                                BestBuyCA(store, logger, alert),
+                                logger,
+                                config
+                            )
                         )
-                    )
-                case 'canadacomputers_ca':
-                    thread_list.append(
-                        VendorThread(
-                            CanadaComputersCA(store, logger, alert),
-                            logger,
-                            config
+                    case 'canadacomputers_ca':
+                        thread_list.append(
+                            VendorThread(
+                                CanadaComputersCA(store, logger, alert),
+                                logger,
+                                config
+                            )
                         )
-                    )
-                case 'newegg_ca':
-                    thread_list.append(
-                        VendorThread(
-                            NeweggCA(store, logger, alert),
-                            logger,
-                            config
+                    case 'newegg_ca':
+                        thread_list.append(
+                            VendorThread(
+                                NeweggCA(store, logger, alert),
+                                logger,
+                                config
+                            )
                         )
-                    )
-                case 'memoryexpress_ca':
-                    thread_list.append(
-                        VendorThread(
-                            MemoryExpressCA(store, logger, alert),
-                            logger,
-                            config
+                    case 'memoryexpress_ca':
+                        thread_list.append(
+                            VendorThread(
+                                MemoryExpressCA(store, logger, alert),
+                                logger,
+                                config
+                            )
                         )
-                    )
-                case _:
-                    logger.error("Unknown store: \'%s\'", store['name'])
+                    case _:
+                        logger.error("Unknown store: \'%s\'", store['name'])
+            else:
+                logger.info("Store \'%s\' not enabled.", {store['name']})
 
         # Start all the threads
         for thread in thread_list:
