@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020-2024 fontivan
+# Copyright (c) 2020-2025 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,8 @@ import random
 
 import requests
 from requests_futures.sessions import FuturesSession
+
+from src.utility.parse_exception import ParseException
 
 
 class Vendor(ABC):
@@ -94,7 +96,9 @@ class Vendor(ABC):
     def __init__(self, vendor_data, logger, alert):
         self.logger = logger
         self.vendor_name = vendor_data['name']
-        self.items_to_check = vendor_data['skus']
+        # Will be initialized in the function call
+        self.items_to_check = []
+        self._filter_items(vendor_data['skus'])
         self.stores_to_check = vendor_data['locations']
         self.alert = alert
         self.session = FuturesSession()
@@ -108,50 +112,92 @@ class Vendor(ABC):
             log_level (int): The log level at which the message should be logged.
         """
         log = f"[[ {self.vendor_name} ]] :: {msg}"
-        if log_level == logging.CRITICAL:
-            self.logger.critical(log)
-        elif log_level == logging.ERROR:
-            self.logger.error(log)
-        elif log_level == logging.WARNING:
-            self.logger.warning(log)
-        elif log_level == logging.INFO:
-            self.logger.info(log)
-        elif log_level == logging.DEBUG:
-            self.logger.debug(log)
 
-    def check_stock_for_items(self):
+        match(log_level):
+            case(logging.CRITICAL):
+                self.logger.critical(log)
+            case(logging.ERROR):
+                self.logger.error(log)
+            case(logging.WARNING):
+                self.logger.warning(log)
+            case(logging.INFO):
+                self.logger.info(log)
+            case(logging.DEBUG):
+                self.logger.debug(log)
+
+    def _filter_items(self, vendor_data):
+        for item in vendor_data:
+            if item['enabled'] is True:
+                self.log_msg(
+                    f"Item \'{item['name']}\' added to check list.",
+                    logging.INFO)
+                self.items_to_check.append(item)
+            else:
+                self.log_msg(
+                    f"Item \'{item['name']}\' is not enabled.",
+                    logging.INFO)
+
+    def _initialize_futures(self):
         """
-        Checks the stock availability for items asynchronously.
+        TODO: Fill this in
         """
+
+        # Initialize the list
         futures = []
 
+        # Create the futures based on the items to be checked
         for item in self.items_to_check:
             try:
-                future = self.session.get(item['url'], headers={
+                future = self.session.get(item['url'], allow_redirects=False, headers={
                     'User-Agent': str(random.choice(self.user_agent_headers))
                 }, timeout=self.max_timeout)
                 future.item = item
                 futures.append(future)
             except builtins.Exception as e:
                 raise e
+        return futures
 
+    def _process_futures(self, futures):
+        """
+        TODO: Fill this in
+        """
+
+        # Loop over all the futures and process them
         for future in as_completed(futures):
             try:
                 response = future.result()
                 if response.status_code == 200:
                     self.logger.debug(f"Raw response text: \n ----- {response.text} \n -----")
-                    stock_result = self.parse_item_page(response.text, self.stores_to_check)
+                    stock_result, location = self.parse_item_page(response.text, self.stores_to_check)
                     if stock_result == self.in_stock_result:
-                        self.alert.send_alert(future.item, self.vendor_name)
+                        self.alert.send_alert(future.item, self.vendor_name, location)
                     elif stock_result == self.out_of_stock_result:
                         self.log_msg(
                             f"\'{future.item['name']}\' not in stock.",
                             logging.INFO
                         )
                     else:
-                        raise ValueError('Unable to parse stock from webpage')
+                        raise ParseException
                 else:
-                    raise requests.HTTPError(f"Response code was \'{response.status_code}\'f")
+                    self.log_msg(
+                        f"Response code was \'{response.status_code}\' for \'{future.item['name']}\'",
+                        logging.WARN
+                    )
+                    continue
+            except ParseException:
+                self.log_msg(
+                    f"Failed to parse page contents for: \
+                        \'{future.item['name']}\'. Will try again later.",
+                        logging.ERROR
+                )
+                time.sleep(self.max_timeout)
+            except requests.exceptions.Timeout:
+                self.log_msg(
+                    f"Timeout attempting to check stock for: \
+                        \'{future.item['name']}\'. Will try again later.",
+                        logging.WARN
+                )
+                time.sleep(self.max_timeout)
             except builtins.Exception as e:
                 self.log_msg(
                     f"An error occurred attempting to check stock for: \
@@ -159,7 +205,14 @@ class Vendor(ABC):
                     logging.ERROR
                 )
                 time.sleep(self.max_timeout)
-                raise e
+                raise e from e
+
+    def check_stock_for_items(self):
+        """
+        Checks the stock availability for items asynchronously.
+        """
+        futures = self._initialize_futures()
+        self._process_futures(futures)
 
     @abstractmethod
     def parse_item_page(self, item_page_html, stores_to_check):

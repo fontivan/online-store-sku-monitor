@@ -2,35 +2,204 @@
 # yamllint disable rule:line-length
 data:
   # Store names should match one of the python files found in ./vendors
-  - name: amd_ca
-    skus:
-      - name: "AMD RX 7900XTX - AMD Reference"
-        url: "https://shop-ca-en.amd.com/amd-radeon-rx-7900-xtx-graphics/"
-    locations:
-      - Online
+  ############
+  # Bestbuy
+  ############
   - name: bestbuy_ca
+    enabled: true
     skus:
-      - name: "Nvidia RTX 4090 - Reference Model"
-        url: "https://www.bestbuy.ca/en-ca/product/nvidia-geforce-rtx-4090-24gb-gddr6-video-card/16531651"
+      - name: "Nvidia RTX 5090 - Reference Model"
+        enabled: true
+        url: "https://www.bestbuy.ca/en-ca/product/nvidia-geforce-rtx-5090-32gb-gddr7-video-card/18931348"
+      - name: "Nvidia RTX 5090 - ASUS TUF (Not OC)"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/asus-tuf-gaming-geforce-rtx-5090-32gb-gddr7-video-card/18969272"
+      - name: "Nvidia RTX 5090 - ASUS Astral"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/asus-rog-astral-geforce-rtx-5090-32gb-video-card/19177947"
+      - name: "Nvidia RTX 5090 - Zotac Solid (Not OC)"
+        enabled: true
+        url: "https://www.bestbuy.ca/en-ca/product/zotac-gaming-geforce-rtx-5090-solid-32gb-gddr7-video-card/18931631"
+      - name: "Nvidia RTX 5090 - MSI Ventus"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/msi-ventus-geforce-rtx-5090-32gb-gddr7-video-card/18938755"
+      - name: "Nvidia RTX 5090 - MSI Trio"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/msi-gaming-trio-geforce-rtx-5090-oc-32gb-gddr7-video-card/18938751"
+      - name: "Nvidia RTX 5090 - MSI Vanguard"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/msi-vanguard-geforce-rtx-5090-32gb-gddr7-video-card/18938752"
+      - name: "Nvidia RTX 5090 - MSI Suprim Liquid"
+        enabled: false
+        url: "https://www.bestbuy.ca/en-ca/product/msi-suprim-liquid-geforce-rtx-5090-32gb-gddr7-video-card/18938754"
     locations:
       - Online
+  ############
+  # Canada Computers
+  ############
   - name: canadacomputers_ca
+    enabled: true
     skus:
-      - name: "Nvidia RTX 4090 - ASUS ROG Strix"
-        url: "https://www.canadacomputers.com/product_info.php?cPath=43_557_559&item_id=229558"
-    locations:
-      - "Online / Main Warehouse"
-  - name: memoryexpress_ca
-    skus:
-      - name: "Nvidia RTX 4090 - ASUS ROG Strix"
-        url: "https://www.memoryexpress.com/Products/MX00123007"
+      - name: "Nvidia RTX 5090 - ASUS TUF (Not OC)"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268262/asus-tuf-gaming-geforce-rtx-5090-32gb-gddr7-tuf-rtx5090-32g-gaming.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Windforce"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268191/gigabyte-geforce-rtx-5090-windforce-oc-32g-gddr7-graphics-card-gv-n5090wf3oc-32gd.html"
+      - name: "Nvidia RTX 5090 - Zotac Solid (Not OC)"
+        enabled: true
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268283/zotac-gaming-geforce-rtx-5090-solid-32gb-gddr7-zt-b50900d-10p.html"
+      - name: "Nvidia RTX 5090 - Ventus (OC)"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268435/msi-geforce-rtx-5090-32g-ventus-3x-oc-rtx-5090-32g-ventus-3x-oc.html"
+      - name: "Nvidia RTX 5090 - Zotac Solid (OC)"
+        enabled: true
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268284/zotac-gaming-geforce-rtx-5090-solid-32gb-gddr7-zt-b50900j-10p.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Gaming (OC)"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268190/gigabyte-geforce-rtx-5090-gaming-oc-32g-gddr7-graphics-card-gv-n5090gaming-oc-32gd.html"
+      - name: "Nvidia RTX 5090 - MSI Gaming"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268437/msi-geforce-rtx-5090-32g-gaming-trio-oc-rtx-5090-32g-gaming-trio-oc.html"
+      - name: "Nvidia RTX 5090 - MSI Vanguard Launch Edition"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268439/msi-geforce-rtx-5090-32g-vanguard-soc-launch-edition-rtx-5090-32g-vanguard-soc-launch-editio.html"
+      - name: "Nvidia RTX 5090 - MSI Vanguard"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268438/msi-geforce-rtx-5090-32g-vanguard-soc-rtx-5090-32g-vanguard-soc.html"
+      - name: "Nvidia RTX 5090 - MSI Suprim"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268440/msi-geforce-rtx-5090-32g-suprim-soc-rtx-5090-32g-suprim-soc.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Master"
+        enabled: true
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268188/gigabyte-aorus-geforce-rtx-5090-master-ai-gaming-graphics-card-gv-n5090aorus-m-32gd.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Master ICE"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268187/gigabyte-aorus-geforce-rtx-5090-master-ice-32g-gv-n5090aorusm-ice-32gd.html"
+      - name: "Nvidia RTX 5090 - ASUS TUF (OC)"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268261/asus-tuf-gaming-geforce-rtx-5090-32gb-gddr7-oc-edition-tuf-rtx5090-o32g-gaming.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Waterblock"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268186/gigabyte-aorus-geforce-rtx-5090-xtreme-waterforce-water-block-cooling-gv-n5090aorusx-wb-32gd.html"
+      - name: "Nvidia RTX 5090 - MSI Suprim Liquid"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268441/msi-geforce-rtx-5090-32g-suprim-liquid-soc-rtx-5090-32g-suprim-liquid-soc.html"
+      - name: "Nvidia RTX 5090 - Gigabyte Aoorus AIO"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268184/gigabyte-aorus-geforce-rtx-5090-xtreme-waterforce-aio-cooling-gv-n5090aorusx-w-32gd.html"
+      - name: "Nvidia RTX 5090 - ASUS Astral"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268256/asus-rog-astral-geforce-rtx-5090-32gb-gddr7-oc-edition-quad-fan-rog-astral-rtx5090-o32g-gaming.html"
+      - name: "Nvidia RTX 5090 - ASUS Astral Liquid"
+        enabled: false
+        url: "https://www.canadacomputers.com/en/powered-by-nvidia/268260/asus-rog-astral-lc-geforce-rtx-5090-32gb-gddr7-aio-cooler-rog-astral-lc-rtx5090-o32g-gaming.html"
     locations:
       - "Online"
-# Newegg has aggressive bot detection and will IP ban you in just a few queries
-# - name: newegg_ca
-#   skus:
-#     - name: "Nvidia RTX 4090 - ASUS ROG Strix"
-#       url: "https://www.newegg.ca/asus-geforce-rtx-4090-rog-strix-rtx4090-o24g-gaming/p/N82E16814126593"
-#   locations:
-#     - Online
+  ############
+  # Memory Express
+  ############
+  - name: memoryexpress_ca
+    enabled: true
+    skus:
+      - name: "Nvidia RTX 5090 - Gigabyte Windforce"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132478"
+      - name: "Nvidia RTX 5090 - ASUS TUF (Not OC)"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132352"
+      - name: "Nvidia RTX 5090 - MSI Ventus (OC)"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132651"
+      - name: "Nvidia RTX 5090 - Gigabyte Gaming (OC)"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132477"
+      - name: "Nvidia RTX 5090 - Gigabyte Trio"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132645"
+      - name: "Nvidia RTX 5090 - MSI Vanguard Launch Edition"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132638"
+      - name: "Nvidia RTX 5090 - MSI Vanguard"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132639"
+      - name: "Nvidia RTX 5090 - MSI Suprim"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132637"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Master"
+        enabled: true
+        url: "https://www.memoryexpress.com/Products/MX00132476"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Waterblock"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132566"
+      - name: "Nvidia RTX 5090 - ASUS TUF (OC)"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132351"
+      - name: "Nvidia RTX 5090 - MSI Suprim Liquid"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132636"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus AIO"
+        enabled: false
+        url: "https://www.memoryexpress.com/Products/MX00132565"
+    locations:
+      - "Online"
+  ############
+  # Newegg
+  ############
+  - name: newegg_ca
+    enabled: true
+    skus:
+      - name: "Nvidia RTX 5090 - MSI Ventus"
+        enabled: false
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-ventus-3x-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137946?Item=N82E16814137946"
+      - name: "Nvidia RTX 5090 - Zotac Solid (Not OC)"
+        enabled: true
+        url: "https://www.newegg.ca/zotac-solid-zt-b50900d-10p-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814500597?Item=N82E16814500597"
+      - name: "Nvidia RTX 5090 - Gigabyte Windforce"
+        enabled: false
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-ventus-3x-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932762?Item=N82E16814932762"
+      - name: "Nvidia RTX 5090 - ASUS TUF (Not OC)"
+        enabled: false
+        url: "https://www.newegg.ca/p/N82E16814126752?Item=N82E16814126752"
+      - name: "Nvidia RTX 5090 - MSI Ventus (OC)"
+        enabled: false
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-ventus-3x-oc-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137920?Item=N82E16814137920"
+      - name: "Nvidia RTX 5090 - Gigabyte Gaming (OC)"
+        enabled: false
+        url: "https://www.newegg.ca/gigabyte-gv-n5090gaming-oc-32gd-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932761?Item=N82E16814932761"
+      - name: "Nvidia RTX 5090 - MSI Gaming Trio (OC)"
+        enabled: true
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-gaming-trio-oc-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137919?Item=N82E16814137919"
+      - name: "Nvidia RTX 5090 - MSI Vanguard"
+        enabled: true
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-vanguard-soc-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137918?Item=N82E16814137918"
+      - name: "Nvidia RTX 5090 - MSI Vanguard Launch Edition"
+        enabled: true
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-vanguard-soc-launch-edition-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137917?Item=N82E16814137917"
+      - name: "Nvidia RTX 5090 - MSI Suprim (OC)"
+        enabled: true
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-suprim-soc-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137915?Item=N82E16814137915"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus (Black)"
+        enabled: true
+        url: "https://www.newegg.ca/gigabyte-gv-n5090aorus-m-32gd-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932760?Item=N82E16814932760"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus (White)"
+        enabled: false
+        url: "https://www.newegg.ca/gigabyte-gv-n5090aorusm-ice-32gd-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932765?Item=N82E16814932765"
+      - name: "Nvidia RTX 5090 - Zotac AMP"
+        enabled: false
+        url: "https://www.newegg.ca/zotac-amp-extreme-infinity-zt-b50900b-10p-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814500593?Item=N82E16814500593"
+      - name: "Nvidia RTX 5090 - MSI Suprim Liquid"
+        enabled: false
+        url: "https://www.newegg.ca/msi-rtx-5090-32g-suprim-liquid-soc-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814137916?Item=N82E16814137916"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus Waterblock"
+        enabled: false
+        url: "https://www.newegg.ca/gigabyte-gv-n5090aorusx-wb-32gd-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932764?Item=N82E16814932764"
+      - name: "Nvidia RTX 5090 - Gigabyte Aorus AIO"
+        enabled: false
+        url: "https://www.newegg.ca/gigabyte-gv-n5090aorusx-w-32gd-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814932763?Item=N82E16814932763"
+      - name: "Nvidia RTX 5090 - ASUS Astral"
+        enabled: false
+        url: "https://www.newegg.ca/asus-rog-astral-rog-astral-rtx5090-o32g-gaming-nvidia-geforce-rtx-5090-32gb-gddr7/p/N82E16814126751?Item=N82E16814126751"
+    locations:
+      - Online
 # yamllint enable rule:line-length

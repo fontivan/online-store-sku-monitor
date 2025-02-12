@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020-2024 fontivan
+# Copyright (c) 2020-2025 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ analyzing Newegg Canada's online commerce data.
 """
 
 from bs4 import BeautifulSoup
+from src.utility.parse_exception import ParseException
 from src.utility.vendor import Vendor
 
 class NeweggCA(Vendor):
@@ -48,13 +49,15 @@ class NeweggCA(Vendor):
         Returns:
             str: Result indicating the availability status of the item.
         """
-        online_store = BeautifulSoup(item_page_html, features="html.parser") \
-            .body \
-            .find_all('div', attrs={'class': 'product-buy'})
 
-        for div in online_store:
-            self.logger.debug(div.text)
-            if 'Add to cart' in div.text:
-                return self.in_stock_result
+        try:
+            online_store = BeautifulSoup(item_page_html, features="html.parser") \
+                .find_all('div', attrs={'class': 'product-buy'})
 
-        return self.out_of_stock_result
+            for div in online_store:
+                if 'Add to cart' in div.text:
+                    return self.in_stock_result, 'Web store'
+        except Exception as e:
+            raise ParseException from e
+
+        return self.out_of_stock_result, None

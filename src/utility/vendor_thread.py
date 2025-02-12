@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020-2024 fontivan
+# Copyright (c) 2020-2025 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -66,13 +66,20 @@ class VendorThread(threading.Thread):
             logging.INFO
         )
         while True:
-            self.vendor.check_stock_for_items()
-            if not self.config['loop_forever']:
-                break
-            generated_time = self.config['sleep_timer'] + \
-                random.randrange(self.config['sleep_range_rng_spread'])
-            self.vendor.log_msg(
-                f"Checked all items for vendor, sleeping for \'{generated_time}\' seconds.",
-                logging.INFO
-            )
-            time.sleep(generated_time)
+            try:
+                self.vendor.check_stock_for_items()
+                if not self.config['loop_forever']:
+                    break
+                generated_time = self.config['sleep_timer'] + \
+                    random.randrange(self.config['sleep_range_rng_spread'])
+                self.vendor.log_msg(
+                    f"Checked all items for vendor, sleeping for \'{generated_time}\' seconds.",
+                    logging.INFO
+                )
+                time.sleep(generated_time)
+            except RuntimeError:
+                self.vendor.log_msg(
+                    f"Caught RuntimeError, probably time to end the \'{self.name}\' thread.",
+                    logging.INFO
+                )
+                return

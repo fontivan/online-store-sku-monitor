@@ -57,6 +57,8 @@ class Alert:
         if self.config['voice_alerts']:
             try:
                 self.engine = pyttsx3.init()
+                voices = self.engine.getProperty('voices')
+                self.engine.setProperty('voice', voices[1].id)
                 msg = "Voice alerts are enabled"
                 self.logger.info(f"[[ alert ]] :: {msg}")
                 self.voice_alert_queue_lock = threading.Lock()
@@ -68,18 +70,19 @@ class Alert:
             except OSError as e:
                 self.logger.warn(f"Voice alerts unavailable due to exception: \'{e}\'")
 
-    def send_alert(self, item, vendor_name):
+    def send_alert(self, item, vendor_name, location):
         """
         Sends an alert for the availability of an item.
 
         Args:
             item: The item for which the alert is generated.
             vendor_name: The name of the vendor.
+            location: The name of the location with the item.
         """
         msg = f"Item in stock \'{item['name']}\'"
-        self.logger.critical(f"[[ {vendor_name} ]] :: {msg} at \'{item['url']}")
+        self.logger.critical(f"[[ {vendor_name} ]] :: {msg} at \'{item['url']}\' at \'{location}\'")
         if self.config['voice_alerts'] and self.engine is not None:
-            self.send_voice_msg_to_queue(f"{msg} at {vendor_name}")
+            self.send_voice_msg_to_queue(f"{msg} at {vendor_name} at {location}")
 
     def send_voice_msg_to_queue(self, msg):
         """
@@ -110,5 +113,5 @@ class Alert:
                         self.engine.say(msg)
                         self.engine.runAndWait()
                 time.sleep(1)
-        except KeyboardInterrupt:
-            return
+        except KeyboardInterrupt as e:
+            raise KeyboardInterrupt from e

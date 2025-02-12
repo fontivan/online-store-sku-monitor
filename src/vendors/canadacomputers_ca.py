@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2020-2024 fontivan
+# Copyright (c) 2020-2025 fontivan
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ online commerce data.
 """
 
 from bs4 import BeautifulSoup
+from src.utility.parse_exception import ParseException
 from src.utility.vendor import Vendor
 
 
@@ -49,20 +50,38 @@ class CanadaComputersCA(Vendor):
         Returns:
             str: Result indicating the availability status of the item.
         """
-        stock_info_div = BeautifulSoup(item_page_html, features="html.parser") \
-            .body \
-            .find('div', attrs={'class': 'stocklevel-pop'})
 
-        rejoined_html = "".join(str(v) for v in stock_info_div.contents)
+        try:
+            # Use the store pickup modal info
+            # their use the misspelled id 'checkothertores' instead of 'checkotherstores
+            check_other_stores_div = BeautifulSoup(item_page_html, features='html.parser') \
+                .find('div', attrs={'id': 'checkothertores'})
 
-        stores_with_stock_information = BeautifulSoup(rejoined_html, features="html.parser") \
-            .find_all('div', attrs={'class': 'row'})
+            rejoined_html = "".join(str(v) for v in check_other_stores_div.contents)
 
-        for s1 in stores_to_check:
-            for s2 in stores_with_stock_information:
-                if s1 in s2.text:
-                    self.logger.debug(s2.text)
-                    if '-' not in s2.text:
-                        return self.in_stock_result
+            # Always check the online store
+            online_box = BeautifulSoup(rejoined_html, features='html.parser') \
+                .find('div', attrs={'class': 'online-box'}) \
+                .text
 
-        return self.out_of_stock_result
+            online_in_stock_count = online_box.split("Online")[-1].strip()
+
+            # Check for stock number
+            if online_in_stock_count != '0':
+                return self.in_stock_result, 'Web store'
+
+            # Get store data
+            store_divs = BeautifulSoup(rejoined_html, features='html.parser') \
+                .findAll('div', attrs={'class': 'row'})
+
+            # Loop over the stores
+            for s1 in stores_to_check:
+                for s2 in store_divs:
+                    if s1 in s2.text:
+                        in_store_count = s2.text.split(s1)[-1].strip().split(' ')[0].strip()
+                        if in_store_count != '0':
+                            return self.in_stock_result, s1
+        except Exception as e:
+            raise ParseException from e
+
+        return self.out_of_stock_result, None
