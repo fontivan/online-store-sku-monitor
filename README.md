@@ -13,6 +13,6 @@ Run using make:
 make run
 ```
 
-# voice alert
+# audio alerts
 
-Voice alerts are configured using `pyttsx3` and will be enabled if a compatible engine backend is available.
+A siren sound effect will be played via `simpleaudio` if enabled. This requires installing alsa-devel libraries on the executing host.
