@@ -104,7 +104,7 @@ def main():
         "log_to_file": False,
         "sleep_timer": 60,
         "sleep_range_rng_spread": 20,
-        "voice_alerts": True
+        "audio_alerts": True
     }
     try:
         with open('config.yaml', 'r', encoding='UTF-8') as config_file:

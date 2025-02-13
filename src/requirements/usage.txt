@@ -1,4 +1,4 @@
 beautifulsoup4
-pyttsx3
 requests
 requests-futures
+simpleaudio

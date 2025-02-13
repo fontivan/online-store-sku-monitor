@@ -25,23 +25,17 @@ This module contains the Alert class, which handles alerts for item
 availability, including voice alerts if enabled.
 """
 
-import threading
-import time
-import pyttsx3
+import os
+import simpleaudio
 
 class Alert:
     """
     Class for handling alerts for item availability, including voice alerts if enabled.
     """
 
-    engine = None
     logger = None
     config = None
-
-    # A lock must be used because the voice engine can only say one message at a time
-    voice_alert_queue_lock = None
-    voice_alert_queue = []
-    voice_alert_thread = None
+    alert_audio_file_path = os.path.join(os.path.dirname(__file__), "resources", "alert.wav")
 
     def __init__(self, logger, config):
         """
@@ -54,22 +48,6 @@ class Alert:
         self.logger = logger
         self.config = config
 
-        if self.config['voice_alerts']:
-            try:
-                self.engine = pyttsx3.init()
-                voices = self.engine.getProperty('voices')
-                self.engine.setProperty('voice', voices[1].id)
-                msg = "Voice alerts are enabled"
-                self.logger.info(f"[[ alert ]] :: {msg}")
-                self.voice_alert_queue_lock = threading.Lock()
-                self.send_voice_msg_to_queue(msg)
-                self.voice_alert_thread = threading.Thread(
-                    target=self.process_voice_queue
-                )
-                self.voice_alert_thread.start()
-            except OSError as e:
-                self.logger.warn(f"Voice alerts unavailable due to exception: \'{e}\'")
-
     def send_alert(self, item, vendor_name, location):
         """
         Sends an alert for the availability of an item.
@@ -81,37 +59,16 @@ class Alert:
         """
         msg = f"Item in stock \'{item['name']}\'"
         self.logger.critical(f"[[ {vendor_name} ]] :: {msg} at \'{item['url']}\' at \'{location}\'")
-        if self.config['voice_alerts'] and self.engine is not None:
-            self.send_voice_msg_to_queue(f"{msg} at {vendor_name} at {location}")
+        if self.config['audio_alerts']:
+            self.make_sound()
 
-    def send_voice_msg_to_queue(self, msg):
+    def make_sound(self):
         """
-        Adds a voice message to the queue for processing.
-
-        Args:
-            msg: The message to be added to the queue.
-        """
-        # Replace _ca with ". c a" so the output sounds better
-        msg = msg.replace("_ca", " . c a")
-        # Replace _com with ". com" so the output sounds better
-        msg = msg.replace("_com", ". com")
-
-        # Acquire lock and add message to the queue
-        with self.voice_alert_queue_lock:
-            self.voice_alert_queue.append(msg)
-
-    def process_voice_queue(self):
-        """
-        Processes the voice alert queue, speaking messages using the TTS engine.
+        Play the alert audio file.
         """
         try:
-            while True:
-                # Acquire lock and check for a message
-                with self.voice_alert_queue_lock:
-                    if len(self.voice_alert_queue) > 0:
-                        msg = self.voice_alert_queue.pop(0)
-                        self.engine.say(msg)
-                        self.engine.runAndWait()
-                time.sleep(1)
-        except KeyboardInterrupt as e:
-            raise KeyboardInterrupt from e
+            wave_obj = simpleaudio.WaveObject.from_wave_file(self.alert_audio_file_path)
+            play_obj = wave_obj.play()
+            play_obj.wait_done()
+        except Exception as e:
+            raise e
