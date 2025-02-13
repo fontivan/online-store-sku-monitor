@@ -24,10 +24,10 @@ data:
         enabled: false
         url: "https://www.bestbuy.ca/en-ca/product/msi-ventus-geforce-rtx-5090-32gb-gddr7-video-card/18938755"
       - name: "Nvidia RTX 5090 - MSI Trio"
-        enabled: false
+        enabled: true
         url: "https://www.bestbuy.ca/en-ca/product/msi-gaming-trio-geforce-rtx-5090-oc-32gb-gddr7-video-card/18938751"
       - name: "Nvidia RTX 5090 - MSI Vanguard"
-        enabled: false
+        enabled: true
         url: "https://www.bestbuy.ca/en-ca/product/msi-vanguard-geforce-rtx-5090-32gb-gddr7-video-card/18938752"
       - name: "Nvidia RTX 5090 - MSI Suprim Liquid"
         enabled: false
@@ -59,16 +59,16 @@ data:
         enabled: false
         url: "https://www.canadacomputers.com/en/powered-by-nvidia/268190/gigabyte-geforce-rtx-5090-gaming-oc-32g-gddr7-graphics-card-gv-n5090gaming-oc-32gd.html"
       - name: "Nvidia RTX 5090 - MSI Gaming"
-        enabled: false
+        enabled: true
         url: "https://www.canadacomputers.com/en/powered-by-nvidia/268437/msi-geforce-rtx-5090-32g-gaming-trio-oc-rtx-5090-32g-gaming-trio-oc.html"
       - name: "Nvidia RTX 5090 - MSI Vanguard Launch Edition"
-        enabled: false
+        enabled: true
         url: "https://www.canadacomputers.com/en/powered-by-nvidia/268439/msi-geforce-rtx-5090-32g-vanguard-soc-launch-edition-rtx-5090-32g-vanguard-soc-launch-editio.html"
       - name: "Nvidia RTX 5090 - MSI Vanguard"
-        enabled: false
+        enabled: true
         url: "https://www.canadacomputers.com/en/powered-by-nvidia/268438/msi-geforce-rtx-5090-32g-vanguard-soc-rtx-5090-32g-vanguard-soc.html"
       - name: "Nvidia RTX 5090 - MSI Suprim"
-        enabled: false
+        enabled: true
         url: "https://www.canadacomputers.com/en/powered-by-nvidia/268440/msi-geforce-rtx-5090-32g-suprim-soc-rtx-5090-32g-suprim-soc.html"
       - name: "Nvidia RTX 5090 - Gigabyte Aorus Master"
         enabled: true
@@ -118,13 +118,13 @@ data:
         enabled: false
         url: "https://www.memoryexpress.com/Products/MX00132645"
       - name: "Nvidia RTX 5090 - MSI Vanguard Launch Edition"
-        enabled: false
+        enabled: true
         url: "https://www.memoryexpress.com/Products/MX00132638"
       - name: "Nvidia RTX 5090 - MSI Vanguard"
-        enabled: false
+        enabled: true
         url: "https://www.memoryexpress.com/Products/MX00132639"
       - name: "Nvidia RTX 5090 - MSI Suprim"
-        enabled: false
+        enabled: true
         url: "https://www.memoryexpress.com/Products/MX00132637"
       - name: "Nvidia RTX 5090 - Gigabyte Aorus Master"
         enabled: true

@@ -14,5 +14,5 @@ sleep_timer: 60
 # The +/- range on the above timer
 sleep_range_rng_spread: 20
 
-# Whether or not to enable voice alerts
-voice_alerts: true
+# Whether or not to enable audio alerts
+audio_alerts: true

@@ -10,22 +10,26 @@ BIN=$(ROOT_DIR)/$(VENV)/bin
 
 all: pylint yamllint
 
-$(VENV): src/requirements/ci.txt src/requirements/usage.txt
+$(VENV)-ci: src/requirements/ci.txt
 	$(PY) -m venv $(VENV)
 	$(BIN)/pip install --upgrade -r src/requirements/ci.txt
+	touch $(VENV)
+
+$(VENV)-usage: src/requirements/usage.txt
+	$(PY) -m venv $(VENV)
 	$(BIN)/pip install --upgrade -r src/requirements/usage.txt
 	touch $(VENV)
 
 .PHONY: run
-run: $(VENV)
+run: $(VENV)-usage
 	(cd src && $(BIN)/python online_store_sku_monitor.py)
 
 .PHONY: pylint
-pylint: $(VENV)
+pylint: $(VENV)-ci
 	$(BIN)/pylint $(ROOT_DIR)/src/
 
 .PHONY: yamllint
-yamllint: $(VENV)
+yamllint: $(VENV)-ci
 	$(BIN)/yamllint .
 
 clean:
